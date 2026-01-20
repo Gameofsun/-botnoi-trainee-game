@@ -1,0 +1,62 @@
+<div class="page-header">
+  <h2>สมัครงาน</h2>
+</div>
+
+<div class="page-content">
+  <p class="sub-title">กรอกข้อมูลเพื่อยื่นใบสมัคร</p>
+
+  <div class="card">
+    <h3>👤 ข้อมูลส่วนตัว</h3>
+    <div class="form-group"><label>ชื่อ-นามสกุล</label><input type="text" placeholder="ระบุชื่อ-นามสกุล"></div>
+    <div class="row">
+      <div class="col"><label>เบอร์โทรศัพท์</label><input type="tel" placeholder="08X-XXX-XXXX"></div>
+      <div class="col"><label>วันเกิด</label><input type="text" placeholder="วว/ดด/ปปปป"></div>
+    </div>
+    <div class="form-group">
+    <label>เพศ</label>
+    <div class="gender-pill">
+      <div class="pill" [class.active]="gender === 'male'" (click)="setGender('male')">ชาย</div>
+      <div class="pill" [class.active]="gender === 'female'" (click)="setGender('female')">หญิง</div>
+      <div class="pill" [class.active]="gender === 'other'" (click)="setGender('other')">อื่นๆ</div>
+    </div>
+  </div>
+  </div>
+
+  <div class="card">
+    <h3>@ ข้อมูลติดต่อ</h3>
+    <div class="form-group">
+      <label>อีเมล</label>
+      <input type="email" placeholder="example@mail.com">
+    </div>
+    <div class="form-group">
+      <label>ที่อยู่ปัจจุบัน</label>
+      <textarea rows="3" placeholder="ระบุที่อยู่สำหรับการจัดส่งเอกสาร"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🎓 การทำงานและการศึกษา</h3>
+    <div class="form-group"><label>สถานที่ทำงานที่สนใจ</label><input type="text" placeholder="ระบุสาขาหรือสถานที่ปฏิบัติงาน"></div>
+    <div class="form-group"><label>สถานศึกษาล่าสุด</label><input type="text" placeholder="ระบุชื่อมหาวิทยาลัยหรือโรงเรียน"></div>
+  </div>
+
+  <div class="card">
+    <h3>📄 เอกสารประกอบ</h3>
+    <div class="upload-zone" (click)="fileInput.click()">
+      <div class="icon-up">📄</div>
+      <h4>อัปโหลดใบแสดงผลการเรียน (Transcript)</h4>
+      <p class="upload-desc">รองรับไฟล์ PDF, JPG ขนาดไม่เกิน 5MB</p>
+      
+      <button class="btn-upload">เลือกไฟล์</button>
+      
+      <input #fileInput type="file" hidden (change)="onFileSelect($event)">
+      
+      <div *ngIf="fileName" class="file-show">ไฟล์ที่เลือก: {{ fileName }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <button class="btn-primary" (click)="goToLogin()">ยืนยันสมัคร</button>
+  <button class="btn-text">ยกเลิก</button>
+</div>

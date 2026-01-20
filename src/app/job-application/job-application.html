@@ -1,0 +1,105 @@
+<div class="page-bg">
+  <div class="header-bar">
+    <button class="back-btn">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#327b78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <h1>สมัครงาน</h1>
+    <div style="width: 24px;"></div> </div>
+
+  <div class="content-container">
+    <h2 class="main-title">ข้อมูลการสมัครงาน</h2>
+    <p class="subtitle">กรุณากรอกข้อมูลให้ครบถ้วนเพื่อใช้ในการพิจารณา</p>
+
+    <div class="card">
+      <div class="card-header">
+        <svg class="section-icon" viewBox="0 0 24 24" fill="#327b78"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <h3>ข้อมูลส่วนตัว</h3>
+      </div>
+      
+      <div class="form-group">
+        <label>ชื่อ-นามสกุล</label>
+        <input type="text" class="form-input" placeholder="ระบุชื่อ-นามสกุล">
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>เบอร์โทรศัพท์</label>
+          <input type="tel" class="form-input" placeholder="08X-XXX-XXXX">
+        </div>
+        <div class="col">
+          <label>วันเกิด</label>
+          <div class="input-with-icon">
+            <input type="text" class="form-input" placeholder="mm/dd/yyyy">
+            <span class="calendar-icon">📅</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>เพศ</label>
+        <div class="gender-options">
+          <button type="button" class="gender-btn">ชาย</button>
+          <button type="button" class="gender-btn">หญิง</button>
+          <button type="button" class="gender-btn">อื่นๆ</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="#327b78" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        <h3>ข้อมูลติดต่อ</h3>
+      </div>
+
+      <div class="form-group">
+        <label>อีเมล</label>
+        <input type="email" class="form-input" placeholder="example@mail.com">
+      </div>
+
+      <div class="form-group">
+        <label>ที่อยู่ปัจจุบัน</label>
+        <textarea rows="3" class="form-input" placeholder="ระบุที่อยู่สำหรับการจัดส่งเอกสาร"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg class="section-icon" viewBox="0 0 24 24" fill="#327b78"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+        <h3>การทำงานและการศึกษา</h3>
+      </div>
+
+      <div class="form-group">
+        <label>สถานที่ทำงานที่สนใจ</label>
+        <input type="text" class="form-input" placeholder="ระบุสาขาหรือสถานที่ปฏิบัติงานที่ต้องการ">
+      </div>
+
+      <div class="form-group">
+        <label>สถานศึกษาล่าสุด</label>
+        <input type="text" class="form-input" placeholder="ระบุชื่อมหาวิทยาลัยหรือโรงเรียน">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <svg class="section-icon" viewBox="0 0 24 24" fill="#327b78"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        <h3>เอกสารประกอบ</h3>
+      </div>
+
+      <div class="upload-area">
+        <div class="upload-icon-circle">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#327b78"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+        </div>
+        <p class="upload-title">อัปโหลดใบแสดงผลการเรียน (Transcript)</p>
+        <p class="upload-desc">รองรับไฟล์ PDF, JPG ขนาดไม่เกิน 5MB</p>
+        <button type="button" class="btn-select-file">เลือกไฟล์</button>
+        <input type="file" style="display: none;" id="fileInput">
+      </div>
+    </div>
+
+    <div class="footer-actions">
+      <button class="btn-confirm">ยืนยันสมัคร</button>
+      <button class="btn-cancel">ยกเลิก</button>
+    </div>
+
+  </div>
+</div>

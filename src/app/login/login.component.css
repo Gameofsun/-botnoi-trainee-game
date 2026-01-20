@@ -1,0 +1,17 @@
+:host { display: flex; flex-direction: column; height: 100%; }
+
+.page-header { flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #fff; }
+.page-header h2 { font-size: 18px; font-weight: 600; margin: 0; color: #333; }
+.back-btn { background: none; border: none; padding: 0; cursor: pointer; }
+
+.page-content { flex: 1 1 auto; padding: 20px; overflow-y: auto; background: #fff; }
+.center-mode { display: flex; flex-direction: column; justify-content: center; } /* จัดกลางแนวตั้ง */
+
+.icon-circle { width: 80px; height: 80px; background: #e0f2f1; border-radius: 50%; color: #2c7873; font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+.title { text-align: center; margin: 0 0 5px; font-size: 22px; color: #333; }
+.desc { text-align: center; color: #888; margin: 0 0 30px; font-size: 14px; }
+
+.form-group { margin-bottom: 20px; }
+label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 8px; color: #333; }
+
+.page-footer { flex: 0 0 auto; padding: 20px; background: #fff; border-top: 1px solid #f0f0f0; }

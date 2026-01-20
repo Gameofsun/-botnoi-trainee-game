@@ -1,0 +1,31 @@
+:host { height: 100%; display: block; }
+.success-container { 
+  height: 100%; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 30px; 
+  text-align: center;
+}
+
+.success-icon {
+  width: 90px; height: 90px;
+  background: #4caf50;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+  animation: popIn 0.5s ease;
+}
+
+h1 { margin: 0 0 10px; color: #333; font-size: 24px; }
+p { color: #888; margin: 0 0 40px; }
+
+.btn-area { width: 100%; }
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}

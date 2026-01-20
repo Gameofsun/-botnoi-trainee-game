@@ -1,0 +1,42 @@
+/* Layout หลัก */
+:host { display: flex; flex-direction: column; height: 100%; }
+.page-header { flex: 0 0 auto; padding: 15px; border-bottom: 1px solid #f0f0f0; background: #fff; text-align: center; }
+.page-header h2 { margin: 0; font-size: 18px; }
+
+.page-content { flex: 1 1 auto; overflow-y: auto; padding: 20px; background: #fff; }
+.page-footer { flex: 0 0 auto; padding: 20px; border-top: 1px solid #f0f0f0; background: #fff; display: flex; flex-direction: column; }
+
+/* Styling ทั่วไป */
+.sub-title { color: #888; font-size: 14px; margin-bottom: 20px; }
+.card { border: 1px solid #f0f0f0; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+.card h3 { margin: 0 0 15px; font-size: 16px; color: #333; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+
+.form-group { margin-bottom: 15px; }
+label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #333; }
+.row { display: flex; gap: 10px; } .col { flex: 1; }
+
+/* Gender Pills */
+.gender-pill { display: flex; gap: 5px; }
+.pill { flex: 1; text-align: center; padding: 10px; font-size: 14px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; color: #666; }
+.pill.active { border-color: #2c7873; color: #2c7873; background: #f0fdfc; font-weight: 600; }
+
+/* Upload Zone (เหมือนรูปเป๊ะ) */
+.upload-zone {
+  border: 2px dashed #b2dfdb; border-radius: 12px; padding: 30px 20px;
+  text-align: center; background: #fbfdfd; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center;
+}
+.icon-up { 
+  width: 40px; height: 40px; background: #e0f2f1; border-radius: 50%; 
+  display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 20px;
+}
+.upload-zone h4 { margin: 0 0 5px; font-size: 14px; color: #333; }
+.upload-desc { margin: 0 0 15px; font-size: 12px; color: #999; }
+
+/* ปุ่มเลือกไฟล์สีเขียว */
+.btn-upload {
+  background-color: #2c7873; color: white; border: none;
+  padding: 8px 24px; border-radius: 20px; font-size: 14px; cursor: pointer;
+}
+
+.file-show { margin-top: 10px; font-size: 13px; color: #2c7873; font-weight: bold; }

@@ -1,0 +1,231 @@
+/* ตั้งค่าพื้นฐาน */
+.page-bg {
+  background-color: #f8f9fa; /* สีเทาอ่อนพื้นหลัง */
+  min-height: 100vh;
+  font-family: 'Sarabun', sans-serif; /* ถ้ามีฟอนต์ไทยสวยๆ */
+  padding-bottom: 40px;
+}
+
+/* Header ด้านบน */
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.header-bar h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* เนื้อหาหลัก */
+.content-container {
+  max-width: 600px; /* จำกัดความกว้างให้ดูเหมือนมือถือ */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.main-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* สไตล์ของการ์ดสีขาว */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.section-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.card-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+/* ฟอร์ม Input */
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background-color: #f3f4f6; /* พื้นหลัง Input สีเทา */
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box; /* สำคัญเพื่อให้ padding ไม่ดัน layout */
+}
+
+.form-input::placeholder {
+  color: #a0aec0;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #327b78;
+  background-color: #fff;
+}
+
+/* Layout แถวแนวนอน */
+.row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.col {
+  flex: 1;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+}
+
+/* ปุ่มเลือกเพศ */
+.gender-options {
+  display: flex;
+  gap: 10px;
+}
+
+.gender-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  border-radius: 8px;
+  color: #555;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.gender-btn:hover, .gender-btn:focus {
+  border-color: #327b78;
+  color: #327b78;
+  background-color: #f0fdfc;
+}
+
+/* โซนอัปโหลด */
+.upload-area {
+  border: 2px dashed #b2dfdb;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  background-color: #fcfdfd;
+}
+
+.upload-icon-circle {
+  width: 50px;
+  height: 50px;
+  background-color: #e0f2f1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+.upload-title {
+  font-weight: 600;
+  margin: 0 0 5px;
+  font-size: 14px;
+}
+
+.upload-desc {
+  color: #888;
+  font-size: 12px;
+  margin: 0 0 15px;
+}
+
+.btn-select-file {
+  background-color: #327b78;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ปุ่มด้านล่าง */
+.footer-actions {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn-confirm {
+  width: 100%;
+  background-color: #327b78; /* สีเขียวตามแบบ */
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(44, 120, 115, 0.2);
+}
+
+.btn-cancel {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 16px;
+  cursor: pointer;
+}
