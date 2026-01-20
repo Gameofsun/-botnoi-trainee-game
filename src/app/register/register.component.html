@@ -2,42 +2,90 @@
   <h2>สมัครงาน</h2>
 </div>
 
-<div class="page-content">
+<div class="page-content" [formGroup]="registerForm">
   <p class="sub-title">กรอกข้อมูลเพื่อยื่นใบสมัคร</p>
 
   <div class="card">
     <h3>👤 ข้อมูลส่วนตัว</h3>
-    <div class="form-group"><label>ชื่อ-นามสกุล</label><input type="text" placeholder="ระบุชื่อ-นามสกุล"></div>
-    <div class="row">
-      <div class="col"><label>เบอร์โทรศัพท์</label><input type="tel" placeholder="08X-XXX-XXXX"></div>
-      <div class="col"><label>วันเกิด</label><input type="text" placeholder="วว/ดด/ปปปป"></div>
-    </div>
     <div class="form-group">
-    <label>เพศ</label>
-    <div class="gender-pill">
-      <div class="pill" [class.active]="gender === 'male'" (click)="setGender('male')">ชาย</div>
-      <div class="pill" [class.active]="gender === 'female'" (click)="setGender('female')">หญิง</div>
-      <div class="pill" [class.active]="gender === 'other'" (click)="setGender('other')">อื่นๆ</div>
+      <label>ชื่อ-นามสกุล <span class="text-red">*</span></label>
+      <input type="text" 
+             formControlName="fullName" 
+             placeholder="ระบุชื่อ-นามสกุล"
+             [class.input-error]="isInvalid('fullName')">
+      <small *ngIf="isInvalid('fullName')" class="text-error">กรุณาระบุชื่อ-นามสกุล</small>
     </div>
-  </div>
+    
+    <div class="row">
+      <div class="col">
+        <label>เบอร์โทรศัพท์ <span class="text-red">*</span></label>
+        <input type="tel" 
+               formControlName="phone" 
+               placeholder="08X-XXX-XXXX"
+               [class.input-error]="isInvalid('phone')">
+        <small *ngIf="isInvalid('phone')" class="text-error">กรุณาระบุเบอร์โทรศัพท์</small>
+      </div>
+      <div class="col">
+        <label>วันเกิด <span class="text-red">*</span></label>
+        <input type="text" 
+               formControlName="birthDate" 
+               placeholder="วว/ดด/ปปปป"
+               [class.input-error]="isInvalid('birthDate')">
+        <small *ngIf="isInvalid('birthDate')" class="text-error">กรุณาระบุวันเกิด</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>เพศ <span class="text-red">*</span></label>
+      <div [class.gender-error]="isInvalid('gender')">
+        <div class="gender-pill">
+          <div class="pill" [class.active]="registerForm.get('gender')?.value === 'male'" (click)="setGender('male')">ชาย</div>
+          <div class="pill" [class.active]="registerForm.get('gender')?.value === 'female'" (click)="setGender('female')">หญิง</div>
+          <div class="pill" [class.active]="registerForm.get('gender')?.value === 'other'" (click)="setGender('other')">อื่นๆ</div>
+        </div>
+      </div>
+      <small *ngIf="isInvalid('gender')" class="text-error">กรุณาเลือกเพศ</small>
+    </div>
   </div>
 
   <div class="card">
     <h3>@ ข้อมูลติดต่อ</h3>
     <div class="form-group">
-      <label>อีเมล</label>
-      <input type="email" placeholder="example@mail.com">
+      <label>อีเมล <span class="text-red">*</span></label>
+      <input type="email" 
+             formControlName="email" 
+             placeholder="example@mail.com"
+             [class.input-error]="isInvalid('email')">
+      <small *ngIf="isInvalid('email')" class="text-error">กรุณาระบุอีเมลที่ถูกต้อง</small>
     </div>
     <div class="form-group">
-      <label>ที่อยู่ปัจจุบัน</label>
-      <textarea rows="3" placeholder="ระบุที่อยู่สำหรับการจัดส่งเอกสาร"></textarea>
+      <label>ที่อยู่ปัจจุบัน <span class="text-red">*</span></label>
+      <textarea rows="3" 
+                formControlName="address" 
+                placeholder="ระบุที่อยู่สำหรับการจัดส่งเอกสาร"
+                [class.input-error]="isInvalid('address')"></textarea>
+      <small *ngIf="isInvalid('address')" class="text-error">กรุณาระบุที่อยู่</small>
     </div>
   </div>
 
   <div class="card">
     <h3>🎓 การทำงานและการศึกษา</h3>
-    <div class="form-group"><label>สถานที่ทำงานที่สนใจ</label><input type="text" placeholder="ระบุสาขาหรือสถานที่ปฏิบัติงาน"></div>
-    <div class="form-group"><label>สถานศึกษาล่าสุด</label><input type="text" placeholder="ระบุชื่อมหาวิทยาลัยหรือโรงเรียน"></div>
+    <div class="form-group">
+      <label>สถานที่ทำงานที่สนใจ <span class="text-red">*</span></label>
+      <input type="text" 
+             formControlName="workplace" 
+             placeholder="ระบุสาขาหรือสถานที่ปฏิบัติงาน"
+             [class.input-error]="isInvalid('workplace')">
+      <small *ngIf="isInvalid('workplace')" class="text-error">กรุณาระบุสถานที่ทำงาน</small>
+    </div>
+    <div class="form-group">
+      <label>สถานศึกษาล่าสุด <span class="text-red">*</span></label>
+      <input type="text" 
+             formControlName="school" 
+             placeholder="ระบุชื่อมหาวิทยาลัยหรือโรงเรียน"
+             [class.input-error]="isInvalid('school')">
+      <small *ngIf="isInvalid('school')" class="text-error">กรุณาระบุสถานศึกษา</small>
+    </div>
   </div>
 
   <div class="card">
@@ -46,11 +94,8 @@
       <div class="icon-up">📄</div>
       <h4>อัปโหลดใบแสดงผลการเรียน (Transcript)</h4>
       <p class="upload-desc">รองรับไฟล์ PDF, JPG ขนาดไม่เกิน 5MB</p>
-      
       <button class="btn-upload">เลือกไฟล์</button>
-      
       <input #fileInput type="file" hidden (change)="onFileSelect($event)">
-      
       <div *ngIf="fileName" class="file-show">ไฟล์ที่เลือก: {{ fileName }}</div>
     </div>
   </div>

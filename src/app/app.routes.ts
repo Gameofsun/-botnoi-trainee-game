@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SuccessComponent } from './success/success.component';
+import { JobApplication } from './job-application/job-application';
 
 export const routes: Routes = [
   // 1. เปลี่ยนให้เปิดมาเจอหน้า Register (กรอกใบสมัคร) ก่อน
@@ -10,5 +11,6 @@ export const routes: Routes = [
   // ลำดับหน้า: register -> login -> success
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'success', component: SuccessComponent }
+  { path: 'success', component: SuccessComponent },
+  { path: 'job-application', component: JobApplication},
 ];

@@ -40,3 +40,24 @@ label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; c
 }
 
 .file-show { margin-top: 10px; font-size: 13px; color: #2c7873; font-weight: bold; }
+
+/* เพิ่มส่วนนี้สำหรับ Error */
+.input-error {
+  border: 1px solid #ff4d4f !important; /* ขอบสีแดง */
+  background-color: #fff1f0; /* พื้นหลังสีแดงอ่อนๆ */
+}
+
+.text-error {
+  color: #ff4d4f;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+/* กรณี Gender Pills ไม่ได้เลือก */
+.gender-error {
+  border: 1px solid #ff4d4f;
+  border-radius: 8px;
+  padding: 5px;
+  background-color: #fff1f0;
+}
