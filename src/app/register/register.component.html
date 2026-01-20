@@ -23,8 +23,20 @@
                formControlName="phone" 
                placeholder="08X-XXX-XXXX"
                [class.input-error]="isInvalid('phone')">
-        <small *ngIf="isInvalid('phone')" class="text-error">กรุณาระบุเบอร์โทรศัพท์</small>
+        
+        <div *ngIf="isInvalid('phone')" class="text-error">
+          <small *ngIf="registerForm.get('phone')?.hasError('required')">
+            กรุณาระบุเบอร์โทรศัพท์
+          </small>
+          <small *ngIf="registerForm.get('phone')?.hasError('pattern')">
+            ต้องขึ้นต้นด้วย 0 และเป็นตัวเลขเท่านั้น
+          </small>
+          <small *ngIf="registerForm.get('phone')?.hasError('minlength') || registerForm.get('phone')?.hasError('maxlength')">
+            เบอร์โทรศัพท์ต้องมี 9-10 หลัก
+          </small>
+        </div>
       </div>
+      
       <div class="col">
         <label>วันเกิด <span class="text-red">*</span></label>
         <input type="text" 
@@ -99,6 +111,7 @@
       <div *ngIf="fileName" class="file-show">ไฟล์ที่เลือก: {{ fileName }}</div>
     </div>
   </div>
+
 </div>
 
 <div class="page-footer">

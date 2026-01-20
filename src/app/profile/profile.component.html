@@ -1,0 +1,94 @@
+<div class="mobile-frame">
+  <div class="scroll-container">
+    
+    <div class="profile-content">
+      <div class="header">
+        <button class="icon-btn" (click)="goBack()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h2>โปรไฟล์</h2>
+        <button class="icon-btn" (click)="onEdit()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00796b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+      </div>
+
+      <div class="profile-header">
+        <div class="avatar-wrapper">
+          <img [src]="userProfile.image" alt="Profile">
+          <button class="camera-btn">📷</button>
+        </div>
+        <h3>{{ userProfile.name }}</h3>
+        <p>{{ userProfile.role }}</p>
+      </div>
+
+      <div class="section-title">
+        <span class="icon">👤</span> ข้อมูลส่วนตัว
+      </div>
+      <div class="info-card">
+        <div class="row-item">
+          <label>เพศ</label>
+          <div class="value">{{ userProfile.gender }}</div>
+        </div>
+        <div class="divider"></div>
+        <div class="row-item">
+          <label>วันเกิด</label>
+          <div class="value">{{ userProfile.birthDate }}</div>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <span class="icon">📇</span> ข้อมูลติดต่อ
+      </div>
+      <div class="info-card">
+        <div class="row-item">
+          <label>อีเมล</label>
+          <div class="value">{{ userProfile.email }}</div>
+        </div>
+        <div class="divider"></div>
+        <div class="row-item">
+          <label>เบอร์โทรศัพท์</label>
+          <div class="value">{{ userProfile.phone }}</div>
+        </div>
+        <div class="divider"></div>
+        <div class="row-item vertical">
+          <label>ที่อยู่</label>
+          <div class="value">{{ userProfile.address }}</div>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <span class="icon">🎓</span> ข้อมูลการศึกษาและงาน
+      </div>
+      <div class="info-card">
+        <div class="row-item vertical">
+          <label>สถานศึกษา</label>
+          <div class="value">{{ userProfile.university }}</div>
+        </div>
+        <div class="divider"></div>
+        <div class="row-item vertical">
+          <label>สถานที่ปฏิบัติงานที่ต้องการ</label>
+          <div class="value">{{ userProfile.preferredLocation }}</div>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <span class="icon">📄</span> เอกสารที่อัปโหลด
+      </div>
+      <div class="info-card file-card">
+        <div class="file-icon">PDF</div>
+        <div class="file-info">
+          <div class="filename">{{ userProfile.transcriptFile }}</div>
+          <div class="filesize">{{ userProfile.fileSize }} • อัปโหลดเมื่อ {{ userProfile.uploadDate }}</div>
+        </div>
+        <button class="view-btn">👁️</button>
+      </div>
+
+      <div class="footer-action">
+        <button class="logout-btn" (click)="logout()">
+          🚪 ออกจากระบบ
+        </button>
+      </div>
+      
+    </div> 
+  </div> 
+</div>

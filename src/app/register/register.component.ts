@@ -16,28 +16,27 @@ export class RegisterComponent {
   fileName: string = ''; 
 
   constructor(private router: Router, private fb: FormBuilder) {
-    // กำหนดให้ "ทุกช่อง" เป็น Required (บังคับกรอก)
+
     this.registerForm = this.fb.group({
       fullName: ['', Validators.required],
       phone: ['', [
         Validators.required,
-        Validators.minLength(9),  // ไม่ต่ำกว่า 9
-        Validators.maxLength(10), // ไม่เกิน 10
-        Validators.pattern(/^0[0-9]*$/) // Regular Expression: ต้องขึ้นต้นด้วย 0 และตามด้วยตัวเลขเท่านั้น
+        Validators.minLength(9),  
+        Validators.maxLength(10), 
+        Validators.pattern(/^0[0-9]*$/) 
       ]],
-      birthDate: ['', Validators.required], // เพิ่มบังคับ
+      birthDate: ['', Validators.required], 
       gender: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      address: ['', Validators.required],   // เพิ่มบังคับ
-      workplace: ['', Validators.required], // เพิ่มบังคับ
-      school: ['', Validators.required]     // เพิ่มบังคับ
+      address: ['', Validators.required],   
+      workplace: ['', Validators.required], 
+      school: ['', Validators.required]     
     });
   }
 
   // ฟังก์ชันเช็ค Error (ใช้ใน HTML)
   isInvalid(fieldName: string): boolean {
     const control = this.registerForm.get(fieldName);
-    // เป็นจริงเมื่อ: ข้อมูลผิด AND (เคยคลิกแล้ว OR กดปุ่มยืนยันแล้ว)
     return !!(control && control.invalid && (control.dirty || control.touched));
   }
 
