@@ -1,0 +1,48 @@
+<div class="logo-area">
+  <div class="logo-icon">M</div> 
+  <div class="logo-text">
+    <h2>my project job</h2> 
+  </div>
+</div>
+
+<div style="padding: 0 12px; margin-bottom: 20px; font-size: 11px; color: #666;">
+  เข้าใช้งานล่าสุด: <br>
+  <strong style="color: #2c7873;">{{ lastLogin | thaiDate }}</strong>
+  <!-- <strong style="color: #2c7873;">{{ 12345 |number}}</strong> -->
+</div>
+
+<div class="menu-group">
+  <button 
+    type="button" 
+    class="nav-item" 
+    [class.active]="active === 'Dashboard'" 
+    (click)="select('Dashboard')">
+    <span class="icon">📊</span>
+    Dashboard
+  </button>
+
+  <button 
+    type="button" 
+    class="nav-item" 
+    [class.active]="active === 'Data API'" 
+    (click)="select('Data API')">
+    <span class="icon">🗄️</span>
+    Data API
+  </button>
+
+  <button 
+    type="button" 
+    class="nav-item" 
+    [class.active]="active === 'RxJS'" 
+    (click)="select('RxJS')">
+    <span class="icon">🔄</span>
+    RxJS 
+  </button>
+</div>
+
+<div class="spacer"></div>
+
+<button type="button" class="nav-item logout-btn" (click)="logout()">
+  <span class="icon">🚪</span>
+  Logout
+</button>

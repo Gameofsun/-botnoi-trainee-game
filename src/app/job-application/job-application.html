@@ -1,95 +1,38 @@
-<div class="mobile-frame">
-  <div class="dashboard-container">
-    
-    <header class="header">
-      <div class="header-text">
-        <span class="semester">Semester 1/2024</span>
-        <h1>Good Morning, <br> <strong>Ajarn Somchai</strong></h1>
-      </div>
-      <div class="profile-pic">
-        <img src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg" alt="Profile">
-        <span class="notif-badge">3</span>
-        <span class="online-dot"></span>
-      </div>
-    </header>
-
-    <div class="search-box">
-      <span class="search-icon">🔍</span>
-      <input type="text" placeholder="Search student, class...">
-      <span class="cmd-badge">CMD+K</span>
-    </div>
-
-    <div class="menu-grid">
-      <div class="card-menu" *ngFor="let menu of menus">
-        <div class="card-top">
-          <div class="icon-box" [ngClass]="menu.color">{{ menu.icon }}</div>
-        </div>
-        <div class="card-content">
-          <h3>{{ menu.title }}</h3>
-          <p>{{ menu.sub }}</p>
-        </div>
-        <div class="card-footer">
-          <span *ngIf="menu.statusBadge" class="badge-pending">{{ menu.status }}</span>
-          <span *ngIf="!menu.statusBadge" class="status-text">
-            <span *ngIf="menu.statusColor === 'dot-green'" class="dot green"></span>
-            <span *ngIf="menu.statusIcon">{{ menu.statusIcon }}</span>
-            {{ menu.status }}
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="activities-section">
-      <div class="section-header">
-        <h2>กิจกรรมล่าสุด <span class="text-light">Upcoming</span></h2>
-        <a href="#" class="view-all">View all</a>
-      </div>
-
-      <div class="timeline">
-        <div class="timeline-item" *ngFor="let item of activities">
-          <div class="time-col">
-            <strong>{{ item.time }}</strong>
-            <small>{{ item.period }}</small>
-          </div>
-          <div class="activity-card" [ngClass]="'border-' + item.theme">
-            <div class="act-header">
-              <h3>{{ item.subject }}</h3>
-              <span class="tag" [ngClass]="'bg-' + item.theme + '-light'">{{ item.code }}</span>
-            </div>
-            <p class="act-desc">{{ item.desc }}</p>
-            <div class="act-footer">
-              <span>📍 {{ item.room }}</span>
-              <span *ngIf="item.status" class="status-time">🕒 {{ item.status }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div> <button class="fab-btn">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-      <line x1="12" y1="5" x2="12" y2="19"></line>
-      <line x1="5" y1="12" x2="19" y2="12"></line>
-    </svg>
+<div class="page-header">
+  <button class="back-btn" routerLink="/register">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c7873" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
   </button>
+  <h2>สร้างบัญชี</h2>
+  <div style="width:24px"></div>
+</div>
 
-  <nav class="bottom-nav">
-    <a href="#" class="nav-item active">
-      <span class="icon">🏠</span>
-      <span>Home</span>
-    </a>
-    <a href="#" class="nav-item">
-      <span class="icon">💬</span>
-      <span>Messages</span>
-    </a>
-    <a href="#" class="nav-item">
-      <span class="icon">📄</span>
-      <span>Reports</span>
-    </a>
-    <a href="#" class="nav-item">
-      <span class="icon">👤</span>
-      <span>Profile</span>
-    </a>
-  </nav>
+<div class="page-content center-mode">
+  <div class="icon-circle">👤</div>
+  <h2 class="title">สร้างบัญชีผู้ใช้งาน</h2>
+  <p class="desc">กำหนดชื่อและรหัสผ่านสำหรับเข้าสู่ระบบ</p>
 
+  <div class="form-area" [formGroup]="loginForm">
+    <div class="form-group"><label>ชื่อผู้ใช้งาน</label>
+      <input type="text" formControlName="username" placeholder="Username" [class.input-error]="isInvalid('username')" >
+    <div class="form-group"><label>รหัสผ่าน</label>
+      <input type="password" formControlName="password"placeholder="••••••••" [class.input-error]="isInvalid('password')" ></div>
+      <div class="text-error" *ngIf="isInvalid('password')">
+        <small *ngIf="loginForm.get('password')?.hasError('required')">กรุณาระบุรหัสผ่าน</small>
+        <small *ngIf="loginForm.get('password')?.hasError('minlength')">รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร</small>
+        <small *ngIf="loginForm.get('password')?.hasError('pattern')">
+          ต้องมี A-Z, a-z, ตัวเลข และอักขระพิเศษ อย่างน้อยอย่างละ 1
+        </small>
+    </div>
+    <div class="form-group"><label>ยืนยันรหัสผ่าน</label>
+      <input type="password" formControlName="confirmPassword" placeholder="••••••••" [class.input-error]="isInvalid('confirmPassword')"></div>
+      <div class="text-error" *ngIf="isInvalid('confirmPassword')">
+        <small *ngIf="loginForm.get('confirmPassword')?.hasError('required')">กรุณายืนยันรหัสผ่าน</small>
+        <small *ngIf="loginForm.get('confirmPassword')?.hasError('passwordMismatch')">รหัสผ่านไม่ตรงกัน</small>
+      </div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <button class="btn-primary" (click)="onRegister()">ลงทะเบียน</button>
+  <button class="btn-text" (click)="onCancel()">ยกเลิก</button>
 </div>

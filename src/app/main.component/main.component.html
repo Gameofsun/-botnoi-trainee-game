@@ -1,0 +1,147 @@
+<div class="main-layout">
+  
+  <app-sidebar 
+    [active]="activeMenu" 
+    (menuSelected)="onMenuChange($event)">
+  </app-sidebar>
+
+  <main class="content-area">
+    
+    <header class="topbar">
+      <div class="page-headline">
+        <h1>{{ activeMenu }}</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="user-profile">
+          <div class="user-info" style="text-align: right;">
+            <div class="name">{{ username }}</div>
+            <div class="role">{{ role }}</div>
+          </div>
+          <div class="avatar">👤</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content" [ngSwitch]="activeMenu">
+
+      <div *ngSwitchCase="'Dashboard'" class="empty-state-card">
+        <div class="card-date-picker">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>เลือกช่วงเวลา</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="Start">
+              <input matEndDate formControlName="end" placeholder="End">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+        <div class="empty-icon">📊</div>
+        <h2>Dashboard Overview</h2>
+        <p>ยินดีต้อนรับคุณ {{ username }} เข้าสู่ระบบ</p>
+        
+        <p *ngIf="range.value.start && range.value.end" style="color: #2c7873; margin-top: 10px;">
+          {{ range.value.start | date:'dd/MM/yyyy' }} - {{ range.value.end | date:'dd/MM/yyyy' }}
+        </p>
+      </div>
+
+      <div *ngSwitchCase="'RxJS'" class="empty-state-card">
+        <div class="empty-icon">🔄</div>
+        <h2>RxJS Streams</h2>
+      </div>
+
+      <div *ngSwitchCase="'Data API'" class="mat-elevation-z8 table-container">
+        
+        <div class="table-header">
+          <h2>User List ({{ dataSource.data.length }})</h2>
+          <input (keyup)="applyFilter($event)" placeholder="🔍 Search..." class="search-input">
+        </div>
+
+        <div class="loading-shade" *ngIf="isLoading">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let row"> #{{row.id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="avatar">
+            <th mat-header-cell *matHeaderCellDef> Avatar </th>
+            <td mat-cell *matCellDef="let row"> 
+              <img [src]="row.avatar" class="table-avatar"> 
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let row" style="font-weight: 500;"> {{row.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="birthDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Birthday </th>
+            <td mat-cell *matCellDef="let row"> {{row.birthDate | thaiDate}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="age">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Age </th>
+            <td mat-cell *matCellDef="let row"> {{row.age}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+            <td mat-cell *matCellDef="let row"> 
+              <span [style.background]="row.roleBadge" class="role-badge" 
+                    style="display: flex; align-items: center; gap: 4px; width: fit-content;">
+                <mat-icon style="font-size: 16px; height: 16px; width: 16px;">
+                  {{ row.roleText === 'admin' ? 'admin_panel_settings' : 'person' }}
+                </mat-icon>
+                {{row.roleText | titlecase}}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let row"> 
+              <a [href]="row.emailLink" class="email-link">{{row.email}}</a>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let row">
+              <div class="action-buttons">
+                <button mat-icon-button color="primary" 
+                        matTooltip="ดูข้อมูลละเอียดของ {{row.name}}"
+                        (click)="openEditDialog(row)"> 
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" matTooltip="ลบข้อมูลถาวร">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="8" style="text-align: center; padding: 20px;">
+              No data matching the filter
+            </td>
+          </tr>
+        </table>
+
+        <mat-paginator [pageSize]="10" 
+                       [pageSizeOptions]="[5, 10, 15, 20, 25, 30]" 
+                       aria-label="Select page of users">
+        </mat-paginator>
+
+      </div>
+
+    </div>
+  </main>
+</div>

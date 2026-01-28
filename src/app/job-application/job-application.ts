@@ -1,58 +1,93 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-job',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './job-application.html', // อิงตามชื่อไฟล์ที่คุณใช้
-  styleUrls: ['./job-application.css']   // อิงตามชื่อไฟล์ที่คุณใช้
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  templateUrl: './job-application.html',
+  styleUrls: ['./job-application.css'],
 })
-export class DashboardComponent { // คุณตั้งชื่อ class ไว้แบบนี้
+export class JobApplication {
+  loginForm: FormGroup;
 
-  // ข้อมูลเมนู 4 ช่อง (ตามรูป)
-  menus = [
-    { 
-      title: 'จัดการชั้นเรียน', sub: 'Manage Classes', 
-      icon: '🎓', color: 'bg-blue', 
-      status: '3 Active', statusColor: 'dot-green' 
-    },
-    { 
-      title: 'รายชื่อนักเรียน', sub: 'Student List', 
-      icon: '👥', color: 'bg-orange', 
-      status: '450 Total', statusIcon: '👤' 
-    },
-    { 
-      title: 'บันทึกคะแนน', sub: 'Grade Submission', 
-      icon: '📝', color: 'bg-purple', 
-      status: '2 Pending', statusBadge: true 
-    },
-    { 
-      title: 'ตารางสอน', sub: 'Schedule', 
-      icon: '📅', color: 'bg-sky', 
-      status: 'Next: 13:30', statusColor: 'text-gray' 
-    }
-  ];
+  private readonly passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
-  // ข้อมูลกิจกรรมล่าสุด (Timeline)
-  activities = [
-    {
-      time: '09:00', period: 'AM',
-      subject: 'คณิตศาสตร์ 101', desc: 'Mathematics Fundamentals',
-      code: 'MATH101', room: 'Room 402', status: 'In 30 min',
-      theme: 'blue', isUpcoming: true
-    },
-    {
-      time: '11:00', period: 'AM',
-      subject: 'ฟิสิกส์ปฏิบัติการ', desc: 'Physics Laboratory',
-      code: 'PHY202', room: 'Lab 3', status: '',
-      theme: 'orange', isUpcoming: false
-    },
-    {
-      time: '13:30', period: 'PM',
-      subject: 'คาบที่ปรึกษา', desc: 'Advisory Period',
-      code: 'ADV', room: 'Room 101', status: '',
-      theme: 'purple', isUpcoming: false
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.loginForm = this.fb.group(
+      {
+        username: ['', [Validators.required]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(this.passwordPattern),
+          ],
+        ],
+        confirmPassword: ['', [Validators.required]],
+      },
+      { validators: [this.passwordMatchValidator] } // ตรวจให้ password ตรงกับ confirmPassword
+    );
+  }
+
+  // ใช้ใน HTML: isInvalid('password')
+  isInvalid(field: string): boolean {
+    const control = this.loginForm.get(field);
+    return !!(control && control.invalid && (control.dirty || control.touched));
+  }
+
+  // ให้ error ไปอยู่ที่ confirmPassword จะได้โชว์ใต้ช่องยืนยันรหัสผ่านได้ง่าย
+  private passwordMatchValidator = (
+    group: AbstractControl
+  ): ValidationErrors | null => {
+    const password = group.get('password')?.value;
+    const confirm = group.get('confirmPassword')?.value;
+
+    if (!password || !confirm) return null;
+
+    if (password !== confirm) {
+      group.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
     }
-  ];
+
+    // ถ้าตรงกันแล้ว เคลียร์ error passwordMismatch (แต่ต้องไม่ไปลบ error อื่น)
+    const confirmCtrl = group.get('confirmPassword');
+    if (confirmCtrl?.hasError('passwordMismatch')) {
+      const errors = { ...(confirmCtrl.errors || {}) };
+      delete errors['passwordMismatch'];
+      confirmCtrl.setErrors(Object.keys(errors).length ? errors : null);
+    }
+
+    return null;
+  };
+
+  onRegister(): void {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched(); // ให้ error โชว์ครบ
+      return;
+    }
+
+    // TODO: ส่งค่าไป API สมัครสมาชิกได้ที่นี่
+    // const payload = this.loginForm.value;
+
+    this.router.navigate(['/success']);
+  }
+  
+  onCancel() {
+  this.loginForm.reset();
+  this.router.navigate(['/login']);
+  }
+
+
 }

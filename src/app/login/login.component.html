@@ -1,23 +1,70 @@
-<div class="page-header">
-  <button class="back-btn" routerLink="/register">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c7873" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-  </button>
-  <h2>สร้างบัญชี</h2>
-  <div style="width:24px"></div>
-</div>
+<div class="login-square">
 
-<div class="page-content center-mode">
-  <div class="icon-circle">👤</div>
-  <h2 class="title">สร้างบัญชีผู้ใช้งาน</h2>
-  <p class="desc">กำหนดชื่อและรหัสผ่านสำหรับเข้าสู่ระบบ</p>
-
-  <div class="form-area">
-    <div class="form-group"><label>ชื่อผู้ใช้งาน</label><input type="text" placeholder="Username"></div>
-    <div class="form-group"><label>รหัสผ่าน</label><input type="password" placeholder="••••••••"></div>
-    <div class="form-group"><label>ยืนยันรหัสผ่าน</label><input type="password" placeholder="••••••••"></div>
+  <div class="header-text">
+    <h1>ยินดีต้อนรับ</h1>
+    <p>เข้าสู่ระบบเพื่อจัดการข้อมูลของคุณ</p>
   </div>
-</div>
 
-<div class="page-footer">
-  <button class="btn-primary" (click)="onRegister()">ลงทะเบียน</button>
+  <form #f="ngForm" (ngSubmit)="onLogin(f)">
+
+    <!-- Username -->
+    <div class="form-group">
+      <label>ชื่อผู้ใช้งาน / อีเมล</label>
+
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="model.username"
+        #username="ngModel"
+        required
+        placeholder="ระบุชื่อผู้ใช้งาน"
+        [class.input-error]="username.invalid && (username.dirty || username.touched)"
+      />
+
+      <small *ngIf="username.invalid && (username.dirty || username.touched)" class="text-error">
+        กรุณาระบุชื่อผู้ใช้งาน
+      </small>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label>รหัสผ่าน</label>
+
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="model.password"
+        #password="ngModel"
+        required
+        minlength="8"
+        [pattern]="passwordPattern"
+        placeholder="••••••••"
+        [class.input-error]="password.invalid && (password.dirty || password.touched)"
+      />
+
+      <small
+        *ngIf="password.errors?.['required'] && (password.dirty || password.touched)"
+        class="text-error"
+      >
+        กรุณาระบุรหัสผ่าน
+      </small>
+
+      <small
+        *ngIf="(password.errors?.['minlength'] || password.errors?.['pattern']) && (password.dirty || password.touched)"
+        class="text-error"
+      >
+        รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร และต้องมี A-Z, a-z, ตัวเลข และอักขระพิเศษ อย่างน้อยอย่างละ 1
+      </small>
+    </div>
+
+    <button class="btn-primary-full" type="submit">
+      เข้าสู่ระบบ
+    </button>
+
+    <div class="footer-link">
+      ยังไม่มีบัญชี?
+      <a (click)="goToRegister()">สร้างบัญชีใหม่</a>
+    </div>
+
+  </form>
 </div>

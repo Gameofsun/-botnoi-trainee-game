@@ -1,0 +1,376 @@
+:host {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  display: block;
+  background-color: #f2f4f7; /* สีพื้นหลังเทาอ่อน แบบ Dashboard สมัยใหม่ */
+  min-height: 100vh;
+}
+
+.main-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden; /* ซ่อน scroll ของ body หลัก */
+}
+
+/* พื้นที่ขวา (Content) */
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* ให้ scroll ได้เฉพาะพื้นที่เนื้อหา */
+  padding: 0;
+}
+
+/* Top Navigation Bar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  background-color: transparent;
+}
+
+.page-headline h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #101828;
+  margin: 0;
+}
+
+/* Top Right Controls */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-box {
+  background: #fff;
+  border: 1px solid #d0d5dd;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  width: 240px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+  color: #667085;
+}
+
+.notification-btn {
+  font-size: 20px;
+  cursor: pointer;
+  color: #667085;
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d0d5dd;
+}
+
+/* User Profile Pill */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #f2f4f7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 1px solid #e4e7ec;
+}
+
+.user-info .name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #101828;
+}
+
+.user-info .role {
+  font-size: 12px;
+  color: #667085;
+}
+
+/* Page Content Container */
+.page-content {
+  padding: 0 32px 32px 32px;
+}
+
+/* การ์ดเปล่าสำหรับแสดงผล Dashboard / RxJS */
+.empty-state-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #eaecf0;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.1);
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.card-date-picker {
+  position: absolute; /* ลอยอิสระเทียบกับ empty-state-card */
+  top: 24px;          /* ห่างจากขอบบน 24px */
+  right: 24px;        /* ห่างจากขอบขวา 24px */
+  z-index: 10;        /* ให้อยู่ชั้นบนสุด */
+  width: 180px;       /* กำหนดความกว้างให้พอดี */
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  background: #f2f4f7;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2c7873;
+}
+
+.empty-state-card h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #101828;
+  margin: 0 0 8px 0;
+}
+
+.empty-state-card p {
+  color: #667085;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* =========================================================
+   ✅ ส่วนที่เพิ่มใหม่สำหรับ Material Table + Paginator
+   ========================================================= */
+
+/* กรอบหลักของตาราง */
+.table-container {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden; /* เพื่อให้มุมโค้งแสดงผลถูกต้อง */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: relative; /* สำคัญ! เอาไว้วาง Spinner ซ้อนทับ */
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ส่วนหัวตาราง (Title + Search Box) */
+.table-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #eaecf0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+}
+
+.table-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #101828;
+  font-weight: 600;
+}
+
+/* ช่องค้นหาเฉพาะในตาราง */
+.search-input {
+  padding: 8px 16px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 250px;
+  outline: none;
+  color: #101828;
+  transition: all 0.2s;
+}
+
+.search-input:focus {
+  border-color: #2c7873; /* สีเขียวธีมงาน */
+  box-shadow: 0 0 0 4px rgba(44, 120, 115, 0.1);
+}
+
+/* ตาราง */
+table {
+  width: 100%;
+}
+
+th.mat-header-cell {
+  color: #667085;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 16px 24px;
+}
+
+td.mat-cell {
+  color: #101828;
+  padding: 16px 24px;
+  border-bottom: 1px solid #eaecf0;
+}
+
+/* รูป Avatar ในตาราง */
+.table-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ฉากกั้นตอนโหลด (Spinner Overlay) */
+.loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.8); /* พื้นหลังขาวโปร่งแสง */
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ป้าย Role */
+.role-badge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  display: inline-block;
+}
+
+/* ลิงก์อีเมล */
+.email-link {
+  color: #2c7873;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.email-link:hover {
+  text-decoration: underline;
+}
+
+/* ปรับแต่ง Paginator ให้ดูดีขึ้น */
+mat-paginator {
+  border-top: 1px solid #eaecf0;
+}
+
+/* (Option) เพิ่มใน main.component.css */
+button[mat-icon-button] {
+  margin-right: 8px; /* เว้นระยะปุ่ม */
+}
+
+/* ✅ จัดระเบียบปุ่ม Action */
+.action-buttons {
+  display: flex;           /* ให้ปุ่มเรียงแนวนอน */
+  align-items: center;     /* ให้อยู่กึ่งกลางแนวตั้ง */
+  gap: 8px;                /* เว้นระยะห่างระหว่างปุ่ม 8px */
+  justify-content: flex-start; /* ชิดซ้าย (หรือใช้ center ถ้าอยากให้อยู่กลาง) */
+}
+
+/* ✅ บังคับลบพื้นหลังและขอบ (เผื่อมี CSS Global ทับอยู่) */
+.action-buttons button[mat-icon-button] {
+  background-color: transparent !important; /* พื้นหลังใส */
+  border: none !important;                  /* ไม่มีขอบ */
+  box-shadow: none !important;              /* ไม่มีเงา */
+  width: 40px;                              /* บังคับขนาดให้เป็นวงกลมสวยๆ */
+  height: 40px;
+  line-height: 40px;
+}
+
+/* เพิ่ม Effect ตอนเอาเมาส์ชี้ให้น่าใช้งาน */
+.action-buttons button[mat-icon-button]:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important; /* มีพื้นหลังจางๆ ตอนชี้ */
+}
+
+/* ✅ Dashboard Toolbar Layout */
+.dashboard-toolbar {
+  display: flex;
+  justify-content: space-between; /* ซ้าย-ขวา แยกกัน */
+  align-items: center; /* ให้อยู่กึ่งกลางแนวตั้ง */
+  margin-bottom: 24px; /* เว้นระยะห่างจากการ์ดข้างล่าง */
+}
+
+.dashboard-title h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #101828;
+  margin: 0;
+}
+
+.dashboard-title p {
+  font-size: 14px;
+  color: #667085;
+  margin: 4px 0 0 0;
+}
+
+/* ✅ ปรับแต่ง Date Picker ให้ดู Compact ขึ้น */
+.date-range-picker {
+  width: 300px; /* กำหนดความกว้างให้พอดี */
+}
+
+/* ปรับความสูงของ Input ให้ดูเรียบหรู (Material Density) */
+.date-range-picker ::ng-deep .mat-mdc-form-field-flex {
+  background-color: #fff;
+  border-radius: 8px;
+  /* padding: 0 12px; ถ้าอยากปรับ padding */
+}
+
+/* ถ้าอยากให้มันอยู่ขวาบนสุดแบบลอยๆ (ทางเลือก) */
+/* .dashboard-toolbar {
+  justify-content: flex-end; 
+} 
+*/
+
+
+
+
+/* ✅ เพิ่ม Class นี้สำหรับจัดกึ่งกลางหน้าจอ  snackbar */
+.center-snackbar {
+  /* ดันลงมาจากด้านบน 45% ของความสูงหน้าจอ (เกือบกลางพอดี) */
+  margin-top: 45vh !important; 
+  transform: scale(1.1); /* ขยายใหญ่ขึ้นนิดหน่อยให้เด่นเหมือน Popup */
+}
+
+/* ปรับแต่งสีพื้นหลังให้เป็นสีแดง (ใช้ร่วมกับ error-snackbar เดิมได้) */
+.center-snackbar .mdc-snackbar__surface {
+  background-color: #d32f2f !important;
+  border-radius: 12px !important; /* มุมมนสวยๆ */
+  padding: 8px 16px;
+}
+
+.center-snackbar .mdc-snackbar__label {
+  color: #fff !important;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center; /* จัดตัวหนังสือกลาง */
+}
+
+.center-snackbar .mat-mdc-button {
+  color: #fff !important; /* ปุ่มสีขาว */
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 6px;
+  margin-left: 12px;
+}

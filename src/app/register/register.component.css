@@ -61,3 +61,23 @@ label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; c
   padding: 5px;
   background-color: #fff1f0;
 }
+
+/* ✅ เพิ่มส่วนนี้สำหรับ Tab */
+.tab-content {
+  padding: 24px 8px; /* เว้นระยะห่างด้านใน Tab */
+  min-height: 300px; /* กันหน้าจอกระตุกเวลาเปลี่ยน Tab */
+}
+
+/* ปรับแต่ง Font ของหัวข้อ Tab ให้ดู modern */
+::ng-deep .mat-mdc-tab-label-container {
+  border-bottom: 1px solid #eee;
+}
+
+::ng-deep .mat-mdc-tab-labels {
+  background-color: #fff;
+}
+
+::ng-deep .mdc-tab__text-label {
+  font-family: inherit !important; /* ให้ใช้ font ของแอพเรา */
+  font-size: 14px !important; 
+}

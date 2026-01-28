@@ -1,0 +1,23 @@
+[
+  {
+    "username": "admin",
+    "fullName": "Alex Rivera",
+    "email": "alex.admin@flux.com",
+    "phoneNumber": "081-111-1111",
+    "role": "Admin"
+  },
+  {
+    "username": "super",
+    "fullName": "Sarah Connor",
+    "email": "sarah.s@flux.com",
+    "phoneNumber": "089-999-9999",
+    "role": "Superuser"
+  },
+  {
+    "username": "member",
+    "fullName": "John Doe",
+    "email": "john.d@flux.com",
+    "phoneNumber": "082-222-2222",
+    "role": "Member"
+  }
+]

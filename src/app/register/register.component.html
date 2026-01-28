@@ -3,118 +3,132 @@
 </div>
 
 <div class="page-content" [formGroup]="registerForm">
-  <p class="sub-title">กรอกข้อมูลเพื่อยื่นใบสมัคร</p>
-
-  <div class="card">
-    <h3>👤 ข้อมูลส่วนตัว</h3>
-    <div class="form-group">
-      <label>ชื่อ-นามสกุล <span class="text-red">*</span></label>
-      <input type="text" 
-             formControlName="fullName" 
-             placeholder="ระบุชื่อ-นามสกุล"
-             [class.input-error]="isInvalid('fullName')">
-      <small *ngIf="isInvalid('fullName')" class="text-error">กรุณาระบุชื่อ-นามสกุล</small>
-    </div>
+  
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="500ms">
     
-    <div class="row">
-      <div class="col">
-        <label>เบอร์โทรศัพท์ <span class="text-red">*</span></label>
-        <input type="tel" 
-               formControlName="phone" 
-               placeholder="08X-XXX-XXXX"
-               [class.input-error]="isInvalid('phone')">
+    <mat-tab label="ข้อมูลส่วนตัว">
+      <div class="tab-content">
         
-        <div *ngIf="isInvalid('phone')" class="text-error">
-          <small *ngIf="registerForm.get('phone')?.hasError('required')">
-            กรุณาระบุเบอร์โทรศัพท์
-          </small>
-          <small *ngIf="registerForm.get('phone')?.hasError('pattern')">
-            ต้องขึ้นต้นด้วย 0 และเป็นตัวเลขเท่านั้น
-          </small>
-          <small *ngIf="registerForm.get('phone')?.hasError('minlength') || registerForm.get('phone')?.hasError('maxlength')">
-            เบอร์โทรศัพท์ต้องมี 9-10 หลัก
-          </small>
+        <div class="form-group">
+          <label>ชื่อ-นามสกุล</label>
+          <input type="text" formControlName="fullName" placeholder="ระบุชื่อ-นามสกุล"
+                 [class.input-error]="isInvalid('fullName')">
+          <small *ngIf="isInvalid('fullName')" class="text-error">กรุณาระบุชื่อ-นามสกุล * </small>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label>เบอร์โทรศัพท์</label>
+            <input type="tel" formControlName="phone" placeholder="08X-XXX-XXXX"
+                   inputmode="numeric" pattern="[0-9]*" (input)="onlyNumber($event)"
+                   [class.input-error]="isInvalid('phone')">
+            <div *ngIf="isInvalid('phone')" class="text-error">
+              <small *ngIf="registerForm.get('phone')?.hasError('required')">กรุณาระบุเบอร์โทรศัพท์ *</small>
+              <small *ngIf="registerForm.get('phone')?.hasError('pattern')">ตัวเลขเท่านั้น *</small>
+              <small *ngIf="registerForm.get('phone')?.hasError('minlength')">เบอร์ไม่ครบ *</small>
+            </div>
+          </div>
+          
+          <div class="col">
+            <label>วันเกิด</label>
+            
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>เลือกวันที่</mat-label>
+              <input matInput [matDatepicker]="picker" 
+                    formControlName="birthDate" 
+                    placeholder="วว/ดด/ปปปป"
+                    (click)="picker.open()"> 
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker touchUi></mat-datepicker> 
+              <mat-error *ngIf="isInvalid('birthDate')">
+                กรุณาระบุวันเกิด *
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>เพศ</label>
+          <div [class.gender-error]="isInvalid('gender')">
+            <div class="gender-pill">
+              <div class="pill" [class.active]="registerForm.get('gender')?.value === 'male'" (click)="setGender('male')">ชาย</div>
+              <div class="pill" [class.active]="registerForm.get('gender')?.value === 'female'" (click)="setGender('female')">หญิง</div>
+              <div class="pill" [class.active]="registerForm.get('gender')?.value === 'other'" (click)="setGender('other')">อื่นๆ</div>
+            </div>
+          </div>
+          <small *ngIf="isInvalid('gender')" class="text-error">กรุณาเลือกเพศ * </small>
+        </div>
+
+      </div>
+    </mat-tab>
+
+    <mat-tab label="ข้อมูลติดต่อ">
+      <div class="tab-content">
+        <div class="form-group">
+          <label>อีเมล</label>
+          <input type="email" formControlName="email" placeholder="example@mail.com"
+                 [class.input-error]="isInvalid('email')">
+          <small *ngIf="isInvalid('email')" class="text-error">กรุณาระบุอีเมล * </small>
+        </div>
+        <div class="form-group">
+          <label>ที่อยู่ปัจจุบัน</label>
+          <textarea rows="4" formControlName="address" placeholder="ระบุที่อยู่..."
+                    [class.input-error]="isInvalid('address')"></textarea>
+          <small *ngIf="isInvalid('address')" class="text-error">กรุณาระบุที่อยู่ *</small>
         </div>
       </div>
-      
-      <div class="col">
-        <label>วันเกิด <span class="text-red">*</span></label>
-        <input type="text" 
-               formControlName="birthDate" 
-               placeholder="วว/ดด/ปปปป"
-               [class.input-error]="isInvalid('birthDate')">
-        <small *ngIf="isInvalid('birthDate')" class="text-error">กรุณาระบุวันเกิด</small>
-      </div>
-    </div>
+    </mat-tab>
 
-    <div class="form-group">
-      <label>เพศ <span class="text-red">*</span></label>
-      <div [class.gender-error]="isInvalid('gender')">
-        <div class="gender-pill">
-          <div class="pill" [class.active]="registerForm.get('gender')?.value === 'male'" (click)="setGender('male')">ชาย</div>
-          <div class="pill" [class.active]="registerForm.get('gender')?.value === 'female'" (click)="setGender('female')">หญิง</div>
-          <div class="pill" [class.active]="registerForm.get('gender')?.value === 'other'" (click)="setGender('other')">อื่นๆ</div>
+    <mat-tab label="การทำงาน/ศึกษา">
+      <div class="tab-content">
+        <div class="form-group">
+          <label>สถานที่ทำงานที่สนใจ</label>
+          <input type="text" formControlName="workplace" placeholder="ระบุสาขา..."
+                 [class.input-error]="isInvalid('workplace')">
+          <small *ngIf="isInvalid('workplace')" class="text-error">ระบุสถานที่ * </small>
+        </div>
+        <div class="form-group">
+          <label>สถานศึกษาล่าสุด</label>
+          <input type="text" formControlName="school" placeholder="ชื่อมหาวิทยาลัย..."
+                 [class.input-error]="isInvalid('school')">
+          <small *ngIf="isInvalid('school')" class="text-error">ระบุสถานศึกษา * </small>
         </div>
       </div>
-      <small *ngIf="isInvalid('gender')" class="text-error">กรุณาเลือกเพศ</small>
-    </div>
-  </div>
+    </mat-tab>
 
-  <div class="card">
-    <h3>@ ข้อมูลติดต่อ</h3>
-    <div class="form-group">
-      <label>อีเมล <span class="text-red">*</span></label>
-      <input type="email" 
-             formControlName="email" 
-             placeholder="example@mail.com"
-             [class.input-error]="isInvalid('email')">
-      <small *ngIf="isInvalid('email')" class="text-error">กรุณาระบุอีเมลที่ถูกต้อง</small>
-    </div>
-    <div class="form-group">
-      <label>ที่อยู่ปัจจุบัน <span class="text-red">*</span></label>
-      <textarea rows="3" 
-                formControlName="address" 
-                placeholder="ระบุที่อยู่สำหรับการจัดส่งเอกสาร"
-                [class.input-error]="isInvalid('address')"></textarea>
-      <small *ngIf="isInvalid('address')" class="text-error">กรุณาระบุที่อยู่</small>
-    </div>
-  </div>
+    <mat-tab label="เอกสารประกอบ">
+      <div class="tab-content">
+        <div class="upload-zone" (click)="fileInput.click()">
+          <div class="icon-up">📄</div>
+          <h4>อัปโหลด Transcript</h4>
+          <p class="upload-desc">รองรับ PDF, JPG ไม่เกิน 5MB</p>
+          <button class="btn-upload">เลือกไฟล์</button>
+          <input #fileInput type="file" hidden (change)="onFileSelect($event)">
+          <div *ngIf="fileName" class="file-show">ไฟล์ที่เลือก: {{ fileName }}</div>
+        </div>
+      </div>
+    </mat-tab>
 
-  <div class="card">
-    <h3>🎓 การทำงานและการศึกษา</h3>
-    <div class="form-group">
-      <label>สถานที่ทำงานที่สนใจ <span class="text-red">*</span></label>
-      <input type="text" 
-             formControlName="workplace" 
-             placeholder="ระบุสาขาหรือสถานที่ปฏิบัติงาน"
-             [class.input-error]="isInvalid('workplace')">
-      <small *ngIf="isInvalid('workplace')" class="text-error">กรุณาระบุสถานที่ทำงาน</small>
-    </div>
-    <div class="form-group">
-      <label>สถานศึกษาล่าสุด <span class="text-red">*</span></label>
-      <input type="text" 
-             formControlName="school" 
-             placeholder="ระบุชื่อมหาวิทยาลัยหรือโรงเรียน"
-             [class.input-error]="isInvalid('school')">
-      <small *ngIf="isInvalid('school')" class="text-error">กรุณาระบุสถานศึกษา</small>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>📄 เอกสารประกอบ</h3>
-    <div class="upload-zone" (click)="fileInput.click()">
-      <div class="icon-up">📄</div>
-      <h4>อัปโหลดใบแสดงผลการเรียน (Transcript)</h4>
-      <p class="upload-desc">รองรับไฟล์ PDF, JPG ขนาดไม่เกิน 5MB</p>
-      <button class="btn-upload">เลือกไฟล์</button>
-      <input #fileInput type="file" hidden (change)="onFileSelect($event)">
-      <div *ngIf="fileName" class="file-show">ไฟล์ที่เลือก: {{ fileName }}</div>
-    </div>
-  </div>
+  </mat-tab-group>
 
 </div>
 
 <div class="page-footer">
-  <button class="btn-primary" (click)="goToLogin()">ยืนยันสมัคร</button>
-  <button class="btn-text">ยกเลิก</button>
+  
+  <button class="btn-primary" 
+          (click)="goToLogin()" 
+          [disabled]="isLoading" 
+          [class.btn-loading]="isLoading">
+    
+    <mat-spinner diameter="20" color="accent" *ngIf="isLoading"></mat-spinner>
+    
+    <span *ngIf="!isLoading">ยืนยันสมัคร</span>
+    
+    <span *ngIf="isLoading" style="margin-left: 8px;">กำลังส่งข้อมูล...</span>
+  
+  </button>
+
+  <button class="btn-text" (click)="onCancel()" [disabled]="isLoading">ยกเลิก</button>
+
 </div>
