@@ -14,10 +14,11 @@ import { tokenInterceptor } from './interceptors/token.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
+    // provideHttpClient(withInterceptors([tokenInterceptor])),
     importProvidersFrom(FormsModule),
     provideAnimations(),
     
     // ✅ 3. เรียกใช้แค่บรรทัดเดียว ใส่ interceptor เข้าไปข้างในเลย
-    provideHttpClient(withInterceptors([tokenInterceptor]))
+    
   ],
 };

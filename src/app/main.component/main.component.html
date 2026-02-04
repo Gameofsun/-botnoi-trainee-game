@@ -24,30 +24,153 @@
 
     <div class="page-content" [ngSwitch]="activeMenu">
 
-      <div *ngSwitchCase="'Dashboard'" class="empty-state-card">
-        <div class="card-date-picker">
-          <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>เลือกช่วงเวลา</mat-label>
-            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-              <input matStartDate formControlName="start" placeholder="Start">
-              <input matEndDate formControlName="end" placeholder="End">
-            </mat-date-range-input>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-          </mat-form-field>
-        </div>
-        <div class="empty-icon">📊</div>
-        <h2>Dashboard Overview</h2>
-        <p>ยินดีต้อนรับคุณ {{ username }} เข้าสู่ระบบ</p>
+      <div *ngSwitchCase="'Dashboard'" class="dashboard-container">
         
-        <p *ngIf="range.value.start && range.value.end" style="color: #2c7873; margin-top: 10px;">
-          {{ range.value.start | date:'dd/MM/yyyy' }} - {{ range.value.end | date:'dd/MM/yyyy' }}
-        </p>
+        <mat-tab-group 
+          mat-stretch-tabs="false" 
+          mat-align-tabs="start" 
+          animationDuration="0ms"
+          (selectedTabChange)="onTabChange($event)">
+          
+          <mat-tab label="🌍 World Bank Population">
+            <div class="tab-content-wrapper">
+              
+              <div class="country-buttons-container">
+                <p style="margin-bottom: 8px; color: #666; font-size: 14px;">Select a country:</p>
+                
+                <div class="button-group">
+                  <button *ngFor="let c of countries" 
+                          mat-flat-button 
+                          [color]="selectedCountry === c.iso2Code ? 'primary' : ''"
+                          [class.active-btn]="selectedCountry === c.iso2Code"
+                          (click)="updateCharts(c.iso2Code)">
+                    {{ c.name }}
+                  </button>
+                </div>
+
+                <div class="wb-controls">
+                  <mat-form-field appearance="outline" class="compact-field">
+                    <mat-label>Start Year</mat-label>
+                    <input matInput type="number" [(ngModel)]="wbStartYear" placeholder="2015">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="compact-field">
+                    <mat-label>End Year</mat-label>
+                    <input matInput type="number" [(ngModel)]="wbEndYear" placeholder="2024">
+                  </mat-form-field>
+
+                  <button mat-flat-button class="btn-update-weather" (click)="updateCharts(selectedCountry)">
+                    <mat-icon>refresh</mat-icon> Update Data
+                  </button>
+                </div>
+              </div>
+
+              <div class="charts-grid" style="margin-top: 24px;">
+                <div class="chart-box">
+                  <div class="chart-loading-shade" *ngIf="isWorldBankLoading">
+                    <mat-spinner diameter="40"></mat-spinner>
+                    <span class="loading-text">Loading Data...</span>
+                  </div>
+
+                  <apx-chart *ngIf="lineChartOptions.series && lineChartOptions.series.length > 0"
+                    [series]="lineChartOptions.series!"
+                    [chart]="lineChartOptions.chart!"
+                    [xaxis]="lineChartOptions.xaxis!"
+                    [title]="lineChartOptions.title!"
+                    [stroke]="lineChartOptions.stroke!"
+                    [colors]="lineChartOptions.colors!"
+                    [tooltip]="lineChartOptions.tooltip!"> 
+                  </apx-chart>
+                </div>
+
+                <div class="chart-box">
+                  <div class="chart-loading-shade" *ngIf="isWorldBankLoading">
+                    <mat-spinner diameter="40"></mat-spinner>
+                  </div>
+                  
+                  <apx-chart *ngIf="columnChartOptions.series && columnChartOptions.series.length > 0"
+                    [series]="columnChartOptions.series!"
+                    [chart]="columnChartOptions.chart!"
+                    [xaxis]="columnChartOptions.xaxis!"
+                    [title]="columnChartOptions.title!"
+                    [plotOptions]="columnChartOptions.plotOptions!"
+                    [fill]="columnChartOptions.fill!"
+                    [dataLabels]="columnChartOptions.dataLabels!"
+                    [tooltip]="columnChartOptions.tooltip!"> 
+                  </apx-chart>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="🌤️ Weather Forecast">
+            <div class="tab-content-wrapper">
+              <div class="weather-controls">
+                
+                <mat-form-field appearance="outline" class="compact-field">
+                  <mat-label>Latitude</mat-label>
+                  <input matInput type="number" [(ngModel)]="weatherLat">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="compact-field">
+                  <mat-label>Longitude</mat-label>
+                  <input matInput type="number" [(ngModel)]="weatherLon">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="date-field">
+                  <mat-label>Date Range</mat-label>
+                  <mat-date-range-input [formGroup]="weatherRange" [rangePicker]="weatherPicker">
+                    <input matStartDate formControlName="start" placeholder="Start date">
+                    <input matEndDate formControlName="end" placeholder="End date">
+                  </mat-date-range-input>
+                  <mat-datepicker-toggle matIconSuffix [for]="weatherPicker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #weatherPicker></mat-date-range-picker>
+                </mat-form-field>
+
+                <button mat-flat-button class="btn-update-weather" (click)="loadWeather()">
+                    <mat-icon>refresh</mat-icon> Update Forecast
+                </button>
+              </div>
+
+              <div class="chart-box">
+                <div class="chart-loading-shade" *ngIf="isWeatherLoading">
+                  <mat-spinner diameter="40"></mat-spinner>
+                  <span class="loading-text">Fetching Forecast...</span>
+                </div>
+
+                <apx-chart *ngIf="weatherChartOptions.series && weatherChartOptions.series.length > 0"
+                  [series]="weatherChartOptions.series!"
+                  [chart]="weatherChartOptions.chart!"
+                  [xaxis]="weatherChartOptions.xaxis!"
+                  [title]="weatherChartOptions.title!"
+                  [stroke]="weatherChartOptions.stroke!"
+                  [fill]="weatherChartOptions.fill!"
+                  [colors]="weatherChartOptions.colors!"
+                  [dataLabels]="weatherChartOptions.dataLabels!">
+                </apx-chart>
+              </div>
+            </div>
+          </mat-tab>
+
+          <ng-template #warningDialog>
+            <div class="warning-dialog-content">
+              <mat-icon class="warning-icon">error_outline</mat-icon>
+              <h2 class="warning-title">{{ dialogTitle }}</h2>
+              <p class="warning-message" [innerHTML]="dialogMessage"></p>
+              <button mat-flat-button color="warn" mat-dialog-close>Got it</button>
+            </div>
+          </ng-template>
+
+        </mat-tab-group>
       </div>
 
       <div *ngSwitchCase="'RxJS'" class="empty-state-card">
         <div class="empty-icon">🔄</div>
         <h2>RxJS Streams</h2>
+      </div>
+      
+      <div *ngSwitchCase="'Chat'" style="height: 100%;">
+        <app-chat></app-chat>
       </div>
 
       <div *ngSwitchCase="'Data API'" class="mat-elevation-z8 table-container">
@@ -62,7 +185,6 @@
         </div>
 
         <table mat-table [dataSource]="dataSource" matSort>
-
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
             <td mat-cell *matCellDef="let row"> #{{row.id}} </td>
@@ -128,6 +250,7 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
           <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell" colspan="8" style="text-align: center; padding: 20px;">
               No data matching the filter

@@ -1,13 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThaiDatePipe } from '../pipes/thai-date.pipe';
+import { Router } from '@angular/router';
 
-export type MenuName = 'Dashboard' | 'Data API' | 'RxJS';
+// ✅ แก้ไข 1: ตรวจสอบว่ามี 'Chat' ในนี้ (ไม่ใช่ 'ChatSupport')
+export type MenuName = 'Dashboard' | 'Data API' | 'RxJS' | 'Chat';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, ThaiDatePipe], 
+  imports: [CommonModule, ThaiDatePipe],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
 })
@@ -17,6 +19,8 @@ export class SidebarComponent {
 
   lastLogin = new Date();
 
+  constructor(private router: Router) {}
+
   select(menu: MenuName) {
     this.active = menu;
     this.menuSelected.emit(menu);
@@ -25,6 +29,6 @@ export class SidebarComponent {
   logout() {
     sessionStorage.clear();
     localStorage.clear();
-    // อาจจะ emit หรือให้ main จัดการ route ต่อ
+    this.router.navigate(['/login']);
   }
 }

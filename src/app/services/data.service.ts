@@ -1,4 +1,3 @@
-// data.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,16 +9,13 @@ import { UserProfile, DisplayUser } from '../models/user.model';
 })
 export class DataService {
 
-  // 1. URL ของไฟล์เดิม (Local)
   private localDataUrl = 'assets/data/user-profiles.json';
-  
-  // 2. URL ของ API (DummyJSON)
   private apiUrl = 'https://dummyjson.com/users';
 
   constructor(private http: HttpClient) { }
 
   // =========================================================
-  // 🟢 แบบที่ 1: ดึงข้อมูลจากไฟล์ JSON ในเครื่อง (ของเดิม)
+  // 🟢 1. Local Data & DummyJSON API 
   // =========================================================
   getLocalUsers(): Observable<DisplayUser[]> {
     return this.http.get<UserProfile[]>(this.localDataUrl).pipe(
@@ -31,22 +27,16 @@ export class DataService {
         contact: user.phoneNumber || '-',
         email: user.email,
         emailLink: `mailto:${user.email}`,
-        
-        // ของเก่าไม่มีรูปและวันเกิด ให้ใส่ค่าว่างหรือ undefined ไว้
-        avatar: 'assets/images/default-avatar.png', // หรือใส่รูป default ใน assets ก็ได้
+        avatar: 'assets/images/default-avatar.png',
         birthDate: undefined,
         age: undefined
       })))
     );
   }
 
-  // =========================================================
-  // 🔵 แบบที่ 2: ดึงข้อมูลจาก API จริง (ของใหม่)
-  // =========================================================
   getApiUsers(): Observable<DisplayUser[]> {
     return this.http.get<any>(this.apiUrl).pipe(
       map(response => {
-        // API นี้ส่งข้อมูลมาใน key ชื่อ 'users'
         return response.users.map((user: any) => ({
           id: user.id,
           name: `${user.firstName} ${user.lastName}`,
@@ -58,42 +48,96 @@ export class DataService {
           avatar: user.image,
           birthDate: user.birthDate,
           age: user.age,
-
-          // ✨ 2. ข้อมูลเจาะลึก (ใหม่)
           username: user.username,
           gender: user.gender,
-          
-          // รวมที่อยู่เป็นก้อนเดียว
           address: `${user.address.address}, ${user.address.city}, ${user.address.state}`, 
-          
           university: user.university,
-          
-          // ข้อมูลบริษัท
           company: user.company.name,
           jobTitle: user.company.title
-
         }));
       })
     );
   }
 
   getUserById(id: number): Observable<any> {
-    // ยิงไปที่ https://dummyjson.com/users/1
-    return this.http.get<any>(`${this.apiUrl}/${id}`);}
-    
-  // =========================================================
-  // 🎨 Helper: ฟังก์ชันเลือกสี (ใช้ร่วมกัน)
-  // =========================================================
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
   private getRoleColor(role: string): string {
     const r = role.toLowerCase();
-    
-    // สีแดง (Admin)
     if (r === 'admin') return '#fee2e2';     
-    
-    // สีเหลือง (Superuser / Moderator)
     if (r === 'superuser' || r === 'moderator') return '#fef3c7'; 
-    
-    // สีเขียว (User / Member)
     return '#d1fae5';                        
+  }
+
+  // =========================================================
+  // 🌍 World Bank API 
+  // =========================================================
+  
+  private loadJsonp(url: string): Observable<any> {
+    return new Observable(observer => {
+      const callbackName = 'wb_callback_' + Math.round(100000 * Math.random());
+      
+      const script = document.createElement('script');
+      
+      const separator = url.includes('?') ? '&' : '?';
+      
+      script.src = `${url}${separator}format=jsonp&prefix=${callbackName}`;
+      script.async = true;
+
+      (window as any)[callbackName] = (data: any) => {
+        observer.next(data);
+        observer.complete();
+        cleanup();
+      };
+
+      script.onerror = (error) => {
+        observer.error(error);
+        cleanup();
+      };
+
+      const cleanup = () => {
+        delete (window as any)[callbackName];
+        if (document.body.contains(script)) {
+          document.body.removeChild(script);
+        }
+      };
+
+      document.body.appendChild(script);
+    });
+  }
+
+  getWorldBankCountries(): Observable<any[]> {
+    const url = 'https://api.worldbank.org/v2/country?per_page=10';
+    
+    return this.loadJsonp(url).pipe(
+      map(res => {
+        if (res && res.length > 1) {
+          return res[1];
+        }
+        return [];
+      })
+    );
+  }
+
+  getPopulationData(countryCode: string, startYear: number, endYear: number): Observable<any[]> {
+    const url = `https://api.worldbank.org/v2/country/${countryCode}/indicator/SP.POP.TOTL?date=${startYear}:${endYear}`;
+    
+    return this.loadJsonp(url).pipe(
+      map(res => {
+        if (res && res.length > 1) {
+          return res[1];
+        }
+        return [];
+      })
+    );
+  }
+
+  // =========================================================
+  // 🌤️ Weather API (Open-Meteo) 
+  // =========================================================
+  getWeatherData(lat: number, lon: number, start: string, end: string): Observable<any> {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&start_date=${start}&end_date=${end}&daily=temperature_2m_max,temperature_2m_min`;
+    return this.http.get<any>(url);
   }
 }

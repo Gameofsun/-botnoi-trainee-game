@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { SuccessComponent } from './success/success.component';
 import { adminGuard } from './guards/admin.guard';
 import { UserProfileComponent } from './main.component/user-profile.component';
+import { ChatComponent } from './chat.component/chat.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,7 +17,8 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'success', component: SuccessComponent },
   { path: 'user-profile/:id', component: UserProfileComponent, canActivate: [authGuard] },
-
+  { path: 'user-/:id', component: UserProfileComponent, canActivate: [authGuard] },
+  { path: 'chat', component: ChatComponent, canActivate: [authGuard] },
   {
     path: 'admin',
     

@@ -8,7 +8,6 @@
 <div style="padding: 0 12px; margin-bottom: 20px; font-size: 11px; color: #666;">
   เข้าใช้งานล่าสุด: <br>
   <strong style="color: #2c7873;">{{ lastLogin | thaiDate }}</strong>
-  <!-- <strong style="color: #2c7873;">{{ 12345 |number}}</strong> -->
 </div>
 
 <div class="menu-group">
@@ -37,6 +36,15 @@
     (click)="select('RxJS')">
     <span class="icon">🔄</span>
     RxJS 
+  </button>
+
+  <button 
+    type="button" 
+    class="nav-item" 
+    [class.active]="active === 'Chat'" 
+    (click)="select('Chat')">
+    <span class="icon">💬</span>
+    Chat Support
   </button>
 </div>
 

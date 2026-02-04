@@ -1,14 +1,14 @@
 :host {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   display: block;
-  background-color: #f2f4f7; /* สีพื้นหลังเทาอ่อน แบบ Dashboard สมัยใหม่ */
+  background-color: #f2f4f7; 
   min-height: 100vh;
 }
 
 .main-layout {
   display: flex;
   height: 100vh;
-  overflow: hidden; /* ซ่อน scroll ของ body หลัก */
+  overflow: hidden; 
 }
 
 /* พื้นที่ขวา (Content) */
@@ -16,7 +16,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* ให้ scroll ได้เฉพาะพื้นที่เนื้อหา */
+  overflow-y: auto; 
+  overflow-x: hidden; /* ป้องกัน scroll แนวนอนทั้งหน้า */
   padding: 0;
 }
 
@@ -25,72 +26,41 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 32px;
+  padding: 16px 24px; /* ลด padding นิดหน่อยบนมือถือ */
   background-color: transparent;
+  flex-wrap: wrap; /* เผื่อชื่อยาว */
+  gap: 16px;
 }
 
 .page-headline h1 {
-  font-size: 24px;
+  font-size: 20px; /* ปรับขนาดฟอนต์ให้พอดีมือถือ */
   font-weight: 700;
   color: #101828;
   margin: 0;
 }
 
-/* Top Right Controls */
+/* User Profile */
 .topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.search-box {
-  background: #fff;
-  border: 1px solid #d0d5dd;
-  padding: 8px 12px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  width: 240px;
-}
-
-.search-box input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  width: 100%;
-  color: #667085;
-}
-
-.notification-btn {
-  font-size: 20px;
-  cursor: pointer;
-  color: #667085;
-  background: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #d0d5dd;
-}
-
-/* User Profile Pill */
-.user-profile {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   background-color: #f2f4f7;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 18px;
   border: 1px solid #e4e7ec;
 }
 
@@ -107,82 +77,170 @@
 
 /* Page Content Container */
 .page-content {
-  padding: 0 32px 32px 32px;
+  padding: 0 16px 32px 16px; /* ลด padding ด้านข้างสำหรับมือถือ */
 }
 
-/* การ์ดเปล่าสำหรับแสดงผล Dashboard / RxJS */
-.empty-state-card {
+/* Media Query สำหรับจอ Tablet ขึ้นไป ให้ขยาย padding */
+@media screen and (min-width: 768px) {
+  .topbar { padding: 24px 32px; }
+  .page-headline h1 { font-size: 24px; }
+  .page-content { padding: 0 32px 32px 32px; }
+  .avatar { width: 40px; height: 40px; }
+}
+
+/* =========================================================
+   ✅ Dashboard Styling (Responsive)
+   ========================================================= */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-card {
   background: #ffffff;
   border-radius: 16px;
   border: 1px solid #eaecf0;
   box-shadow: 0 1px 3px rgba(16, 24, 40, 0.1);
-  height: 400px;
+  padding: 16px; /* มือถือ padding น้อยหน่อย */
+}
+
+@media screen and (min-width: 768px) {
+  .dashboard-card { padding: 24px; }
+}
+
+.card-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #f2f4f7;
+  padding-bottom: 16px;
+  flex-wrap: wrap; /* ให้หัวข้อตกบรรทัดได้ถ้าจอเล็กมาก */
+  gap: 12px;
 }
 
-.card-date-picker {
-  position: absolute; /* ลอยอิสระเทียบกับ empty-state-card */
-  top: 24px;          /* ห่างจากขอบบน 24px */
-  right: 24px;        /* ห่างจากขอบขวา 24px */
-  z-index: 10;        /* ให้อยู่ชั้นบนสุด */
-  width: 180px;       /* กำหนดความกว้างให้พอดี */
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.empty-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
+.header-title .icon {
+  font-size: 20px;
   background: #f2f4f7;
-  width: 80px;
-  height: 80px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #2c7873;
 }
 
-.empty-state-card h2 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #101828;
-  margin: 0 0 8px 0;
-}
-
-.empty-state-card p {
-  color: #667085;
-  font-size: 14px;
+.header-title h2 {
+  font-size: 16px;
   margin: 0;
+  color: #101828;
+}
+
+@media screen and (min-width: 768px) {
+  .header-title .icon { width: 40px; height: 40px; font-size: 24px; }
+  .header-title h2 { font-size: 18px; }
+}
+
+/* 📊 Charts Grid (Responsive Grid) */
+.charts-grid {
+  display: grid;
+  /* Mobile First: 1 คอลัมน์ (เรียงลงมา) */
+  grid-template-columns: 1fr; 
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* Tablet/Desktop: 2 คอลัมน์ (ซ้าย-ขวา) */
+@media screen and (min-width: 992px) {
+  .charts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* 🌤️ Weather Controls (Responsive Flex) */
+.weather-controls {
+  display: flex;
+  /* Mobile First: เรียงแนวตั้ง */
+  flex-direction: column; 
+  gap: 16px;
+  margin-bottom: 24px;
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+/* Input Fields on Mobile (Full Width) */
+.compact-field, 
+.date-field {
+  width: 100%; /* เต็มจอในมือถือ */
+}
+
+/* ปุ่ม Update เต็มจอในมือถือ */
+.weather-controls button {
+  width: 100%;
+}
+
+/* Override Material Form Field Height */
+::ng-deep .weather-controls .mat-mdc-form-field-flex {
+  height: 50px;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0 12px;
+}
+
+/* Tablet/Desktop: เรียงแนวนอน */
+@media screen and (min-width: 768px) {
+  .weather-controls {
+    flex-direction: row; /* แนวนอน */
+    align-items: flex-end; /* จัดให้ button ตรงกับ input */
+    flex-wrap: wrap;
+  }
+
+  .compact-field { width: 150px; }
+  .date-field { width: 250px; }
+  .weather-controls button { width: auto; height: 50px; }
 }
 
 /* =========================================================
-   ✅ ส่วนที่เพิ่มใหม่สำหรับ Material Table + Paginator
+   Table Styling (Responsive Scroll)
    ========================================================= */
-
-/* กรอบหลักของตาราง */
 .table-container {
   background: #ffffff;
   border-radius: 12px;
-  overflow: hidden; /* เพื่อให้มุมโค้งแสดงผลถูกต้อง */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  position: relative; /* สำคัญ! เอาไว้วาง Spinner ซ้อนทับ */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: relative; 
   min-height: 400px;
   display: flex;
   flex-direction: column;
+  
+  /* ✅ สำคัญ: ทำให้ตารางเลื่อนซ้ายขวาได้ในมือถือ */
+  overflow-x: auto; 
 }
 
-/* ส่วนหัวตาราง (Title + Search Box) */
+/* ส่วนหัวตาราง */
 .table-header {
   padding: 16px 24px;
   border-bottom: 1px solid #eaecf0;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* มือถือเรียงลง */
+  gap: 16px;
   background-color: #fff;
+}
+
+@media screen and (min-width: 600px) {
+  .table-header {
+    flex-direction: row; /* จอใหญ่เรียงแนวนอน */
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .table-header h2 {
@@ -192,26 +250,29 @@
   font-weight: 600;
 }
 
-/* ช่องค้นหาเฉพาะในตาราง */
 .search-input {
   padding: 8px 16px;
   border: 1px solid #d0d5dd;
   border-radius: 8px;
   font-size: 14px;
-  width: 250px;
+  width: 100%; /* มือถือเต็มจอ */
   outline: none;
   color: #101828;
   transition: all 0.2s;
 }
 
+@media screen and (min-width: 600px) {
+  .search-input { width: 250px; }
+}
+
 .search-input:focus {
-  border-color: #2c7873; /* สีเขียวธีมงาน */
+  border-color: #2c7873; 
   box-shadow: 0 0 0 4px rgba(44, 120, 115, 0.1);
 }
 
-/* ตาราง */
 table {
   width: 100%;
+  min-width: 800px; /* ✅ บังคับความกว้างขั้นต่ำ เพื่อให้ Scroll ทำงาน */
 }
 
 th.mat-header-cell {
@@ -227,7 +288,6 @@ td.mat-cell {
   border-bottom: 1px solid #eaecf0;
 }
 
-/* รูป Avatar ในตาราง */
 .table-avatar {
   width: 40px;
   height: 40px;
@@ -237,21 +297,19 @@ td.mat-cell {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* ฉากกั้นตอนโหลด (Spinner Overlay) */
 .loading-shade {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.8); /* พื้นหลังขาวโปร่งแสง */
+  background: rgba(255, 255, 255, 0.8);
   z-index: 50;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* ป้าย Role */
 .role-badge {
   padding: 4px 12px;
   border-radius: 16px;
@@ -261,7 +319,6 @@ td.mat-cell {
   display: inline-block;
 }
 
-/* ลิงก์อีเมล */
 .email-link {
   color: #2c7873;
   text-decoration: none;
@@ -272,105 +329,171 @@ td.mat-cell {
   text-decoration: underline;
 }
 
-/* ปรับแต่ง Paginator ให้ดูดีขึ้น */
 mat-paginator {
   border-top: 1px solid #eaecf0;
 }
 
-/* (Option) เพิ่มใน main.component.css */
-button[mat-icon-button] {
-  margin-right: 8px; /* เว้นระยะปุ่ม */
-}
-
-/* ✅ จัดระเบียบปุ่ม Action */
 .action-buttons {
-  display: flex;           /* ให้ปุ่มเรียงแนวนอน */
-  align-items: center;     /* ให้อยู่กึ่งกลางแนวตั้ง */
-  gap: 8px;                /* เว้นระยะห่างระหว่างปุ่ม 8px */
-  justify-content: flex-start; /* ชิดซ้าย (หรือใช้ center ถ้าอยากให้อยู่กลาง) */
+  display: flex;           
+  align-items: center;     
+  gap: 8px;                
+  justify-content: flex-start; 
 }
 
-/* ✅ บังคับลบพื้นหลังและขอบ (เผื่อมี CSS Global ทับอยู่) */
-.action-buttons button[mat-icon-button] {
-  background-color: transparent !important; /* พื้นหลังใส */
-  border: none !important;                  /* ไม่มีขอบ */
-  box-shadow: none !important;              /* ไม่มีเงา */
-  width: 40px;                              /* บังคับขนาดให้เป็นวงกลมสวยๆ */
-  height: 40px;
-  line-height: 40px;
-}
-
-/* เพิ่ม Effect ตอนเอาเมาส์ชี้ให้น่าใช้งาน */
-.action-buttons button[mat-icon-button]:hover {
-  background-color: rgba(0, 0, 0, 0.04) !important; /* มีพื้นหลังจางๆ ตอนชี้ */
-}
-
-/* ✅ Dashboard Toolbar Layout */
-.dashboard-toolbar {
+/* Empty State Card (for RxJS) */
+.empty-state-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #eaecf0;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.1);
+  height: 400px;
   display: flex;
-  justify-content: space-between; /* ซ้าย-ขวา แยกกัน */
-  align-items: center; /* ให้อยู่กึ่งกลางแนวตั้ง */
-  margin-bottom: 24px; /* เว้นระยะห่างจากการ์ดข้างล่าง */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.dashboard-title h2 {
-  font-size: 20px;
-  font-weight: 700;
-  color: #101828;
-  margin: 0;
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  background: #f2f4f7;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2c7873;
 }
 
-.dashboard-title p {
-  font-size: 14px;
-  color: #667085;
-  margin: 4px 0 0 0;
+/* ปุ่มเลือกประเทศ */
+.country-buttons-container {
+  background-color: #f9fafb;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #eaecf0;
 }
 
-/* ✅ ปรับแต่ง Date Picker ให้ดู Compact ขึ้น */
-.date-range-picker {
-  width: 300px; /* กำหนดความกว้างให้พอดี */
+.button-group {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px;       
 }
 
-/* ปรับความสูงของ Input ให้ดูเรียบหรู (Material Density) */
-.date-range-picker ::ng-deep .mat-mdc-form-field-flex {
+.button-group button:not(.active-btn) {
   background-color: #fff;
-  border-radius: 8px;
-  /* padding: 0 12px; ถ้าอยากปรับ padding */
+  border: 1px solid #d0d5dd;
+  color: #344054;
 }
 
-/* ถ้าอยากให้มันอยู่ขวาบนสุดแบบลอยๆ (ทางเลือก) */
-/* .dashboard-toolbar {
-  justify-content: flex-end; 
-} 
-*/
+/* --- ส่วนที่เพิ่มเติม/แก้ไขในไฟล์ CSS --- */
 
-
-
-
-/* ✅ เพิ่ม Class นี้สำหรับจัดกึ่งกลางหน้าจอ  snackbar */
-.center-snackbar {
-  /* ดันลงมาจากด้านบน 45% ของความสูงหน้าจอ (เกือบกลางพอดี) */
-  margin-top: 45vh !important; 
-  transform: scale(1.1); /* ขยายใหญ่ขึ้นนิดหน่อยให้เด่นเหมือน Popup */
+/* 1. ขยายความกว้างของ Date Range ให้เห็นวันที่ครบ */
+.date-field {
+  width: 100%; /* เต็มจอในมือถือ */
+  min-width: 280px; /* บังคับขั้นต่ำเพื่อให้เห็นวันที่ครบ */
 }
 
-/* ปรับแต่งสีพื้นหลังให้เป็นสีแดง (ใช้ร่วมกับ error-snackbar เดิมได้) */
-.center-snackbar .mdc-snackbar__surface {
-  background-color: #d32f2f !important;
-  border-radius: 12px !important; /* มุมมนสวยๆ */
-  padding: 8px 16px;
+@media screen and (min-width: 768px) {
+  .date-field { 
+    width: 320px; /* ขยายเพิ่มจากเดิม 250px เพื่อให้วันที่ไม่เบียดกัน */
+  }
 }
 
-.center-snackbar .mdc-snackbar__label {
-  color: #fff !important;
-  font-size: 16px;
+/* 2. ปรับแต่งปุ่ม Update ให้ตรงตามธีมโปรเจกต์ */
+.btn-update-weather {
+  background-color: #2c7873 !important; /* สีเขียวธีมหลัก */
+  color: white !important;
+  height: 50px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  padding: 0 24px !important;
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 6px -1px rgba(44, 120, 115, 0.2) !important;
+}
+
+.btn-update-weather:hover {
+  background-color: #235e5a !important; /* เข้มขึ้นเมื่อ hover */
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px -2px rgba(44, 120, 115, 0.3) !important;
+}
+
+.btn-update-weather mat-icon {
+  margin-right: 4px;
+}
+
+/* 3. ปรับแต่งตัวอักษรภายใน Date Range Input ให้เล็กลงนิดหน่อยเพื่อให้พอดีช่อง */
+::ng-deep .mat-date-range-input-inner {
+  font-size: 14px !important;
+  letter-spacing: 0.5px;
+}
+
+/* 1. Loading Overlay สำหรับกราฟ */
+.chart-box {
+  position: relative; /* สำคัญ! */
+  min-height: 350px;
+}
+
+.chart-loading-shade {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  backdrop-filter: blur(2px);
+}
+
+.loading-text {
+  margin-top: 12px;
+  color: #667085;
+  font-size: 14px;
   font-weight: 500;
-  text-align: center; /* จัดตัวหนังสือกลาง */
 }
 
-.center-snackbar .mat-mdc-button {
-  color: #fff !important; /* ปุ่มสีขาว */
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 6px;
-  margin-left: 12px;
+/* 2. World Bank Controls (ทำให้เหมือน Weather Controls) */
+.wb-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed #eaecf0;
+  align-items: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+}
+
+/* 3. Style สำหรับ Warning Dialog */
+.warning-dialog-content {
+  text-align: center;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.warning-icon {
+  font-size: 48px;
+  height: 48px; width: 48px;
+  color: #f04438;
+  margin-bottom: 16px;
+}
+
+.warning-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #101828;
+  margin: 0 0 8px 0;
+}
+
+.warning-message {
+  color: #667085;
+  margin-bottom: 24px;
+  line-height: 1.5;
 }

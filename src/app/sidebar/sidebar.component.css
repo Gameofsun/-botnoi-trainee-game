@@ -2,12 +2,25 @@
   display: flex;
   flex-direction: column;
   width: 260px; /* ความกว้าง Sidebar */
+  flex-shrink: 0; /* ล็อกไม่ให้พื้นที่ Content ฝั่งขวาเบียดจน Sidebar เล็กลงบน iPad */
   background-color: #ffffff; /* พื้นหลังขาว */
   border-right: 1px solid #eaecf0; /* เส้นขอบบางๆ */
   height: 100vh;
   padding: 24px 16px;
   box-sizing: border-box;
   flex-shrink: 0;
+}
+
+/* ✅ เพิ่มใหม่: เมื่อหน้าจอขนาดมือถือ ให้ Sidebar ย่อขนาดลง */
+@media screen and (max-width: 768px) {
+  :host {
+    width: 70px; /* เหลือแค่พื้นที่สำหรับไอคอน */
+    padding: 24px 8px;
+  }
+  
+  .logo-text, .nav-item span:not(.icon), .logo-text h2 {
+    display: none; /* ซ่อนข้อความ เหลือไว้แต่ไอคอน */
+  }
 }
 
 /* โลโก้ด้านบน */
