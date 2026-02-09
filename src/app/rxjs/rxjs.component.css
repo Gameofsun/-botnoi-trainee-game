@@ -1,0 +1,133 @@
+.main-container {
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+/* ✅ Layout Wrapper: จัดซ้ายขวา */
+.content-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start; /* ให้ Log อยู่ด้านบนเสมอ ไม่ยืดตามความสูง */
+}
+
+.playground-grid {
+  flex: 1; /* ขยายเต็มพื้นที่ที่เหลือ */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-left: 4px solid #3f51b5;
+}
+
+.card.double-width {
+  grid-column: span 2;
+}
+
+/* ✅ Log Panel: ปรับให้ Fix ความกว้างและ Sticky */
+.log-panel {
+  width: 320px; /* กำหนดความกว้างคงที่ */
+  flex-shrink: 0; /* ห้ามหด */
+  background: #212121;
+  color: #00e676;
+  padding: 15px;
+  border-radius: 8px;
+  font-family: monospace;
+  
+  /* ทำให้ Log ลอยตามเวลาเลื่อนหน้าจอ */
+  position: sticky;
+  top: 20px; 
+  max-height: calc(100vh - 40px); /* สูงไม่เกินหน้าจอ */
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  transition: background 0.3s;
+}
+
+button:hover { background-color: #303f9f; }
+button.success { background-color: #2e7d32; }
+button.danger { background-color: #c62828; }
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #ccc;
+  font-size: 0.9em;
+}
+.badge.online { background: #4caf50; color: white; }
+
+.input-box {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.mini-tags span {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin: 2px;
+  font-size: 0.8em;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+}
+
+.logs {
+  flex: 1; /* ให้ส่วนข้อความยืดเต็มพื้นที่ panel */
+  overflow-y: auto;
+  min-height: 200px;
+}
+
+.log-item {
+  padding: 2px 0;
+  border-bottom: 1px solid #333;
+  word-wrap: break-word; /* ตัดคำถ้ายาวเกิน */
+}
+
+/* Mobile Responsive: ถ้าจอเล็กให้กลับมาเรียงแนวตั้ง */
+@media (max-width: 900px) {
+  .content-layout {
+    flex-direction: column;
+  }
+  .log-panel {
+    width: 100%;
+    position: static;
+    max-height: 300px;
+  }
+}

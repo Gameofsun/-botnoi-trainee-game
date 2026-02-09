@@ -88,11 +88,30 @@ export class RegisterComponent {
   }
 
   onFileSelect(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.fileName = file.name;
+  const file = event.target.files[0];
+  const maxSizeInMB = 15;
+  const maxSizeInBytes = maxSizeInMB * 1024 * 1024; // แปลง MB เป็น Bytes
+
+  if (file) {
+    // เช็คขนาดไฟล์
+    if (file.size > maxSizeInBytes) {
+      this.snackBar.open(`❌ ไฟล์มีขนาดใหญ่เกินไป (ห้ามเกิน ${maxSizeInMB}MB)`, 'ปิด', {
+        duration: 5000,
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar']
+      });
+      
+      // ล้างค่าเดิมทิ้ง
+      this.fileName = '';
+      event.target.value = ''; // Reset input file
+      return;
     }
+
+    // ถ้าผ่านเงื่อนไขขนาดไฟล์
+    this.fileName = file.name;
+    
   }
+}
 
   // ฟังก์ชันกดปุ่มยืนยันสมัคร (มี Loading + Snackbar)
   // ในไฟล์ register.component.ts

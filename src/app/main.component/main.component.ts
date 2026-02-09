@@ -8,6 +8,7 @@ import { ThaiDatePipe } from '../pipes/thai-date.pipe';
 import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms'; 
 import moment from 'moment'; 
 import { Router, ActivatedRoute } from '@angular/router';
+import { RxjsComponent } from '../rxjs/rxjs.component';
 
 // Material Modules
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
@@ -38,7 +39,8 @@ import {
   ApexPlotOptions,
   ApexFill,
   ApexDataLabels,
-  ApexTooltip
+  ApexTooltip,
+  
 } from "ng-apexcharts";
 
 import { UserDetailDialogComponent } from '../main.component/user-detail-dialog.component'; 
@@ -91,7 +93,8 @@ export const MY_DASHBOARD_FORMATS = {
     MatSelectModule, 
     MatButtonModule,
     MatTabsModule,
-    ChatComponent
+    ChatComponent,
+    RxjsComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'th-TH' },

@@ -1,0 +1,114 @@
+<div class="main-container">
+  <h2>RxJS 14 Functions Workshop</h2>
+  
+  <div class="content-layout">
+    
+    <div class="playground-grid">
+      
+      <div class="card">
+        <div class="card-header">1. Behavior Subject ***</div>
+        <p>จำค่าล่าสุดเสมอ: <span class="badge" [class.online]="status$.value === 'Online'">{{ status$ | async }}</span></p>
+        <div class="btn-group">
+          <button (click)="testBehaviorSubject('Online')" class="success">Online</button>
+          <button (click)="testBehaviorSubject('Offline')" class="danger">Offline</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">2. Observable ***</div>
+        <p>สร้าง Stream ข้อมูลพื้นฐาน</p>
+        <button (click)="testObservable()">Start Stream</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">3. Pipe & Map</div>
+        <p>แปลงเลข 1-5 เป็นราคา x10</p>
+        <button (click)="testPipeMap()">Run Map</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">4. Filter & Take</div>
+        <p>กรองเลขคี่ เอาแค่ 3 ตัว</p>
+        <button (click)="testFilterTake()">Run Filter</button>
+      </div>
+
+      <div class="card double-width">
+        <div class="card-header">5, 6, 12, 13 Search Box</div>
+        <p>รวม: Debounce, SwitchMap, Tap, Distinct</p>
+        <input #searchInput type="text" placeholder="พิมพ์ค้นหา (ดู Log)..." class="input-box">
+        <div class="mini-tags">
+          <span>5.Debounce</span>
+          <span>6.SwitchMap</span>
+          <span>12.Tap</span>
+          <span>13.Distinct</span>
+        </div>
+        <hr>
+        <p>หรือกดปุ่มจำลอง:</p>
+        <div class="btn-group">
+          <button (click)="testDebounce()">5. Sim Debounce</button>
+          <button (click)="testSwitchMap()">6. Sim SwitchMap</button>
+          <button (click)="testTap()">12. Sim Tap</button>
+          <button (click)="testDistinct()">13. Sim Distinct</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">7. Catch Error</div>
+        <p>โยน Error รับค่าสำรอง</p>
+        <button (click)="testCatchError()" class="danger">Trigger Error</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">8. Interval & Repeat</div>
+        <p>ส่งเสียง "ดริ๊ง!" 3 รอบ</p>
+        <button (click)="testIntervalRepeat()">Start Timer</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">9. Concat & Merge</div>
+        <p>A(เร็ว) กับ B(ช้า)</p>
+        <button (click)="testConcatMerge()">Run Compare</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">10. ForkJoin</div>
+        <p>รอ User, Product, Order เสร็จ</p>
+        <button (click)="testForkJoin()">Call All APIs</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">11. Delay</div>
+        <p>หน่วงเวลา 2 วินาที</p>
+        <button (click)="testDelay()">Start Delay</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">14. CombineLatest</div>
+        <p>รวมค่าล่าสุดของ 2 ตัวแปร</p>
+        <div class="combine-controls">
+          <div>
+            <button (click)="updateColor('แดง')">แดง</button>
+            <button (click)="updateColor('ฟ้า')">ฟ้า</button>
+          </div>
+          <div>
+            <button (click)="updateSize('S')">S</button>
+            <button (click)="updateSize('L')">L</button>
+          </div>
+        </div>
+        <p>Result: {{ color$ | async }} - {{ size$ | async }}</p>
+      </div>
+
+    </div>
+
+    <div class="log-panel">
+      <div class="log-header">
+        <h3>Console Logs</h3>
+        <button (click)="clearLogs()">Clear</button>
+      </div>
+      <div class="logs">
+        <div *ngFor="let l of logs" class="log-item">{{ l }}</div>
+      </div>
+    </div>
+
+  </div>
+</div>

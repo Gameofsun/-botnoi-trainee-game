@@ -99,13 +99,27 @@
 
     <mat-tab label="เอกสารประกอบ">
       <div class="tab-content">
-        <div class="upload-zone" (click)="fileInput.click()">
-          <div class="icon-up">📄</div>
-          <h4>อัปโหลด Transcript</h4>
-          <p class="upload-desc">รองรับ PDF, JPG ไม่เกิน 5MB</p>
-          <button class="btn-upload">เลือกไฟล์</button>
-          <input #fileInput type="file" hidden (change)="onFileSelect($event)">
-          <div *ngIf="fileName" class="file-show">ไฟล์ที่เลือก: {{ fileName }}</div>
+        <div class="upload-zone" (click)="fileInput.click()" 
+            [style.border-color]="fileName ? '#2c7873' : '#b2dfdb'">
+          
+          <div class="icon-up" [style.background]="fileName ? '#e0f2f1' : '#f5f5f5'">
+            {{ fileName ? '✅' : '📄' }}
+          </div>
+          
+          <h4>{{ fileName ? 'เปลี่ยนไฟล์ Transcript' : 'อัปโหลด Transcript' }}</h4>
+          <p class="upload-desc">รองรับ PDF, JPG ไม่เกิน 15MB</p>
+          
+          <button type="button" class="btn-upload">
+            {{ fileName ? 'เลือกไฟล์ใหม่' : 'เลือกไฟล์' }}
+          </button>
+
+          <input #fileInput type="file" hidden 
+                accept=".pdf, .jpg, .jpeg" 
+                (change)="onFileSelect($event)">
+          
+          <div *ngIf="fileName" class="file-show">
+            ไฟล์ที่เลือก: {{ fileName }}
+          </div>
         </div>
       </div>
     </mat-tab>
