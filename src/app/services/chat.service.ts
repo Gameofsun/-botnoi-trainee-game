@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class ChatService {
   private socket: Socket;
   
-  // 🔴 ต้องใส่เลข IP เครื่องคุณ (192.168.1.41) ห้ามใช้ localhost
+  // 🔴 ต้องใส่เลข IP เครื่องคุณ (192.168.1.41) ห้ามใช้ localhost // ลองใช้ codeman
   private url = 'http://192.168.1.41:3000'; 
 
   constructor() {
